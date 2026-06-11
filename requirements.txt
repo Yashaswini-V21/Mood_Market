@@ -41,13 +41,15 @@ asyncio-contextmanager==1.0.0
 
 # Data collection APIs
 praw==7.7.0
-newsapi==0.1.2
-google-trends-api==0.4.2
+newsapi-python==0.2.0
+pytrends==4.9.2
+yfinance==0.2.37
 
 # Database & caching
 sqlalchemy==2.0.25
 psycopg2-binary==2.9.9
 redis==5.0.1
+aiosqlite==0.20.0
 
 # Configuration & logging
 python-dotenv==1.0.0
@@ -57,8 +59,11 @@ pydantic-settings==2.1.0
 # API & web
 fastapi==0.109.1
 uvicorn==0.27.0
+celery==5.3.6
 flask==3.0.0
 requests==2.31.0
+pyjwt==2.8.0
+websockets==12.0
 
 # Utilities
 tqdm==4.67.1

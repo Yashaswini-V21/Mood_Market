@@ -1,0 +1,99 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7.0-alpine
+    container_name: moodmarket_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  # Worker for the default queue (10 concurrency)
+  worker_default:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_worker_default
+    command: celery -A celery_app worker -Q default --concurrency=10 --loglevel=INFO
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+      - TIMESCALEDB_URI=postgresql://postgres:postgres@db:5432/moodmarket
+    depends_on:
+      - redis
+    restart: always
+
+  # Worker for the priority queue (10 concurrency)
+  worker_priority:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_worker_priority
+    command: celery -A celery_app worker -Q priority --concurrency=10 --loglevel=INFO
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+      - TIMESCALEDB_URI=postgresql://postgres:postgres@db:5432/moodmarket
+    depends_on:
+      - redis
+    restart: always
+
+  # Worker for the low priority queue (10 concurrency)
+  worker_low:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_worker_low
+    command: celery -A celery_app worker -Q low --concurrency=10 --loglevel=INFO
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+      - TIMESCALEDB_URI=postgresql://postgres:postgres@db:5432/moodmarket
+    depends_on:
+      - redis
+    restart: always
+
+  # Worker for the critical queue (10 concurrency)
+  worker_critical:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_worker_critical
+    command: celery -A celery_app worker -Q critical --concurrency=10 --loglevel=INFO
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+      - TIMESCALEDB_URI=postgresql://postgres:postgres@db:5432/moodmarket
+    depends_on:
+      - redis
+    restart: always
+
+  # Beat scheduler
+  celery_beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_beat
+    command: celery -A celery_app beat --loglevel=INFO
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+      - TIMESCALEDB_URI=postgresql://postgres:postgres@db:5432/moodmarket
+    depends_on:
+      - redis
+    restart: always
+
+  # Flower Dashboard
+  flower:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: moodmarket_flower
+    command: celery -A celery_app flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - REDIS_URI=redis://redis:6379/0
+    depends_on:
+      - redis
+    restart: always
+
+volumes:
+  redis_data:

@@ -3,7 +3,11 @@ Comprehensive examples for Hype Storm anomaly detection system.
 Demonstrates real-world usage patterns and best practices.
 """
 
+import os
+import sys
 import numpy as np
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import json
 from datetime import datetime, timedelta
 from anomaly_detector import AnomalyDetector

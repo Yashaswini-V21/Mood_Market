@@ -13,16 +13,18 @@ class FinancialDataset(Dataset):
     Dataset representing sliding windows of financial time-series.
     Prevents data leakage by utilizing walk-forward validation slices.
     """
-    def __init__(self, data: np.ndarray, seq_len: int = 72, pred_len: int = 1):
+    def __init__(self, data: np.ndarray, seq_len: int = 72, pred_len: int = 1, stride: int = 1):
         """
         Args:
             data: Preprocessed data of shape (timesteps, 8_features)
             seq_len: Historical lookback sequence length (default 72)
             pred_len: Forecasting steps ahead (default 1)
+            stride: Step stride (default 1)
         """
         self.data = torch.from_numpy(data).float()
         self.seq_len = seq_len
         self.pred_len = pred_len
+        self.stride = stride
         self.n_samples = len(data) - seq_len - pred_len + 1
 
     def __len__(self) -> int:
@@ -202,3 +204,30 @@ def create_walk_forward_dataloaders(
     )
     
     return train_loader, val_loader, test_loader, scaler_params
+
+
+# ============================================================================
+# Compatibility Helpers (Backward Compatibility)
+# ============================================================================
+
+def create_dataloaders(*args, **kwargs):
+    """Compatibility alias for create_walk_forward_dataloaders."""
+    # Remove scaler_params from output for compatibility with simple test scripts
+    train, val, test, _ = create_walk_forward_dataloaders(*args, **kwargs)
+    return train, val, test
+
+
+def generate_synthetic_data(n_samples: int = 10000) -> np.ndarray:
+    """Generates a numpy array of synthetic features for model testing/benchmarking."""
+    np.random.seed(42)
+    # 8 features: sentiment, close, volume, RSI, MACD, BB, google_trends, reddit_hype
+    sentiment = np.random.uniform(-1.0, 1.0, (n_samples, 1))
+    close = np.cumprod(1 + np.random.normal(0, 0.01, (n_samples, 1)))  # Random walk close price
+    volume = np.random.exponential(1000, (n_samples, 1))
+    rsi = np.random.uniform(20, 80, (n_samples, 1))
+    macd = np.random.normal(0, 2, (n_samples, 1))
+    bb = np.random.normal(0, 1, (n_samples, 1))
+    google_trends = np.random.uniform(10, 100, (n_samples, 1))
+    reddit_hype = np.random.exponential(5, (n_samples, 1))
+    
+    return np.hstack([sentiment, close, volume, rsi, macd, bb, google_trends, reddit_hype])
