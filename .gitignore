@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyTorch checkpoints and training outputs
+checkpoints/
+runs/
+*.pt
+*.npz
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Data and Logs
+*.log
+results/equity_curves.json
+results/metrics_comparison.json
+results/benchmark_results.csv
+results/*.png
+training_history.json
+benchmark_results.json
+temp_model.pt
+temp_quant.pt
+
+# Environment configuration
+.env
+.env.*

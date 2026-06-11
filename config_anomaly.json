@@ -1,0 +1,267 @@
+{
+  "anomaly_detection": {
+    "description": "Hype Storm detection system configuration",
+    "version": "1.0.0",
+    "monitoring_interval_minutes": 15,
+    "detection_latency_requirement_ms": 30000,
+    "false_positive_rate_target": 0.05,
+    "ensemble": {
+      "ensemble_threshold": 0.65,
+      "confidence_threshold": 0.7,
+      "voting_strategy": "democratic",
+      "description": "Require 65% of detectors to agree for alert, 70% confidence minimum"
+    },
+    "detectors": {
+      "zscore": {
+        "enabled": true,
+        "weight": 1.0,
+        "threshold": 3.0,
+        "description": "Statistical outliers (±3σ = 99.7% confidence)",
+        "window_size_days": 30,
+        "min_history": 10,
+        "sensitivity": 1.0,
+        "univariate_only": true
+      },
+      "isolation_forest": {
+        "enabled": true,
+        "weight": 0.8,
+        "contamination": 0.05,
+        "n_estimators": 100,
+        "description": "Non-linear anomaly detection via random partitioning",
+        "window_size_days": 30,
+        "min_history": 10,
+        "sensitivity": 1.0,
+        "supports_multivariate": true
+      },
+      "autoencoder": {
+        "enabled": true,
+        "weight": 0.7,
+        "hidden_size": 16,
+        "epochs": 50,
+        "learning_rate": 0.01,
+        "threshold_percentile": 95.0,
+        "description": "Learns normal patterns, flags reconstruction errors",
+        "window_size_days": 30,
+        "min_history": 10,
+        "sensitivity": 1.0,
+        "supports_multivariate": true
+      },
+      "ewma": {
+        "enabled": true,
+        "weight": 0.9,
+        "alpha": 0.2,
+        "spike_multiplier": 2.0,
+        "description": "Volatility spike detection via exponential moving average",
+        "lookback_periods": 5,
+        "window_size_days": 30,
+        "min_history": 10,
+        "sensitivity": 1.0,
+        "univariate_only": true
+      },
+      "adaptive_ewma": {
+        "enabled": true,
+        "weight": 0.85,
+        "alpha": 0.2,
+        "regime_window": 240,
+        "description": "EWMA with regime-adaptive thresholds (low_vol: 3.0x, normal: 2.0x, high_vol: 1.5x)",
+        "window_size_days": 30,
+        "min_history": 10,
+        "sensitivity": 1.0,
+        "univariate_only": true
+      }
+    },
+    "alert_types": {
+      "HYPE_STORM": {
+        "description": "Extreme multi-source spike (Reddit >5σ + Google spike + volatility jump)",
+        "action": "REDUCE_POSITION_SIZE",
+        "severity": "CRITICAL"
+      },
+      "EXTREME_SPIKE": {
+        "description": "Very high Reddit activity (>4σ) with strong consensus",
+        "action": "REVIEW_POSITION",
+        "severity": "HIGH"
+      },
+      "MAJOR_SPIKE": {
+        "description": "High Reddit activity (>3σ) with Google Trends confirmation",
+        "action": "INVESTIGATE",
+        "severity": "MEDIUM"
+      },
+      "VOLATILITY_SPIKE": {
+        "description": "Sudden increase in sentiment volume variance",
+        "action": "MONITOR_CLOSELY",
+        "severity": "MEDIUM"
+      },
+      "ANOMALY_DETECTED": {
+        "description": "Unusual pattern detected by multiple methods",
+        "action": "INVESTIGATE",
+        "severity": "LOW"
+      }
+    },
+    "thresholds": {
+      "zscore": {
+        "normal_threshold": 3.0,
+        "extreme_threshold": 5.0
+      },
+      "isolation_forest": {
+        "contamination_rate": 0.05
+      },
+      "autoencoder": {
+        "error_percentile": 95.0,
+        "extreme_percentile": 99.0
+      },
+      "ewma": {
+        "low_volatility_regime": {
+          "spike_multiplier": 3.0,
+          "description": "More sensitive when volatility is normally low"
+        },
+        "normal_volatility_regime": {
+          "spike_multiplier": 2.0,
+          "description": "Standard spike detection"
+        },
+        "high_volatility_regime": {
+          "spike_multiplier": 1.5,
+          "description": "Less sensitive when already in high volatility"
+        }
+      }
+    },
+    "data_sources": {
+      "reddit": {
+        "enabled": true,
+        "metric": "mention_count",
+        "unit": "mentions_per_15min",
+        "baseline_window": 30,
+        "weight": 0.4,
+        "spike_threshold_multiplier": 5.0
+      },
+      "google_trends": {
+        "enabled": true,
+        "metric": "search_score",
+        "unit": "score_0_100",
+        "baseline_window": 30,
+        "weight": 0.3,
+        "spike_threshold_score": 80
+      },
+      "twitter": {
+        "enabled": true,
+        "metric": "tweet_volume",
+        "unit": "tweets_per_minute",
+        "baseline_window": 30,
+        "weight": 0.3,
+        "spike_threshold_multiplier": 5.0
+      }
+    },
+    "monitoring": {
+      "alert_persistence": {
+        "max_alerts_per_stock": 100,
+        "alert_retention_days": 30
+      },
+      "false_positive_tracking": {
+        "enabled": true,
+        "track_per_stock": true,
+        "target_fpr": 0.05,
+        "alert_if_fpr_exceeds": 0.1
+      },
+      "detector_performance": {
+        "enabled": true,
+        "log_detector_metrics": true,
+        "alert_if_accuracy_drops": true
+      }
+    },
+    "system": {
+      "max_stocks": 500,
+      "max_concurrent_predictions": 10,
+      "baseline_update_frequency": "daily",
+      "detector_retrain_frequency": 7,
+      "thread_pool_size": 8,
+      "cache_size_mb": 512,
+      "logging": {
+        "level": "INFO",
+        "log_detections": true,
+        "log_false_positives": true,
+        "log_performance_metrics": true
+      }
+    },
+    "performance_requirements": {
+      "single_prediction_latency_ms": 30,
+      "batch_prediction_latency_ms": 100,
+      "detection_accuracy_min": 0.92,
+      "false_positive_rate_max": 0.05,
+      "true_positive_rate_min": 0.85,
+      "memory_per_stock_mb": 5,
+      "startup_time_seconds": 10
+    },
+    "alerts": {
+      "notification_channels": [
+        "email",
+        "slack",
+        "webhook"
+      ],
+      "email_recipients": [
+        "trading@example.com",
+        "risk@example.com"
+      ],
+      "slack_webhook": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
+      "webhook_url": "https://api.example.com/alerts"
+    }
+  },
+  "detector_configs": {
+    "zscore": {
+      "univariate": {
+        "threshold_sigma": 3.0,
+        "min_samples": 10,
+        "adapt_threshold": true
+      },
+      "multivariate": {
+        "threshold_sigma": 3.0,
+        "features": ["reddit", "google_trends", "twitter"],
+        "aggregation": "max_zscore"
+      }
+    },
+    "isolation_forest": {
+      "univariate": {
+        "n_estimators": 100,
+        "contamination": 0.05,
+        "random_state": 42,
+        "n_jobs": -1
+      },
+      "multivariate": {
+        "n_estimators": 100,
+        "contamination": 0.05,
+        "max_features": 3,
+        "features": ["reddit", "google_trends", "twitter"]
+      }
+    },
+    "autoencoder": {
+      "univariate": {
+        "hidden_size": 8,
+        "epochs": 50,
+        "batch_size": 32,
+        "learning_rate": 0.01,
+        "activation": "relu"
+      },
+      "multivariate": {
+        "hidden_size": 16,
+        "epochs": 50,
+        "batch_size": 32,
+        "learning_rate": 0.01,
+        "features": ["reddit", "google_trends", "twitter"]
+      }
+    },
+    "ewma": {
+      "standard": {
+        "alpha": 0.2,
+        "spike_multiplier": 2.0,
+        "lookback_periods": 5
+      },
+      "adaptive": {
+        "alpha": 0.2,
+        "regime_window": 240,
+        "regimes": {
+          "low_vol": {"spike_multiplier": 3.0},
+          "normal": {"spike_multiplier": 2.0},
+          "high_vol": {"spike_multiplier": 1.5}
+        }
+      }
+    }
+  }
+}
