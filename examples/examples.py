@@ -3,18 +3,19 @@ Example usage and integration guide for Informer financial forecasting model
 Demonstrates all key components: training, inference, deployment, and benchmarking
 """
 
+import os
+import sys
 import torch
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import numpy as np
 from pathlib import Path
 import logging
 
 # Import components
 from model import Informer, InformerConfig, HuberLoss
-from train import (
-    Trainer,
-    generate_synthetic_data,
-    create_dataloaders
-)
+from trainer import Trainer
+from data_loader import generate_synthetic_data, create_dataloaders
 from inference import InferenceEngine, RealTimePredictor
 from benchmark import ModelBenchmark, LSTMModel
 

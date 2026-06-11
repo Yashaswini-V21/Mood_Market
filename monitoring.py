@@ -535,6 +535,82 @@ class ModelComparisonTracker:
         return disagreements
 
 
+class IngestionMonitor:
+    """Tracks ingestion health: fetch success/fail ratios and database write latencies."""
+    
+    def __init__(self, log_filepath: str = "ingestion_metrics.json"):
+        import threading
+        self.log_filepath = log_filepath
+        self.stats = {
+            "reddit": {"fetches": 0, "failures": 0, "total_fetch_time_ms": 0.0, "writes": 0, "write_failures": 0, "total_write_time_ms": 0.0},
+            "news": {"fetches": 0, "failures": 0, "total_fetch_time_ms": 0.0, "writes": 0, "write_failures": 0, "total_write_time_ms": 0.0},
+            "price": {"fetches": 0, "failures": 0, "total_fetch_time_ms": 0.0, "writes": 0, "write_failures": 0, "total_write_time_ms": 0.0},
+            "trends": {"fetches": 0, "failures": 0, "total_fetch_time_ms": 0.0, "writes": 0, "write_failures": 0, "total_write_time_ms": 0.0}
+        }
+        self.lock = threading.Lock()
+
+    def record_fetch(self, source: str, success: bool, latency_ms: float):
+        with self.lock:
+            source = source.lower()
+            if source in self.stats:
+                self.stats[source]["fetches"] += 1
+                if not success:
+                    self.stats[source]["failures"] += 1
+                self.stats[source]["total_fetch_time_ms"] += latency_ms
+                self._save_to_file()
+
+    def record_write(self, source: str, success: bool, latency_ms: float):
+        with self.lock:
+            source = source.lower()
+            if source in self.stats:
+                self.stats[source]["writes"] += 1
+                if not success:
+                    self.stats[source]["write_failures"] += 1
+                self.stats[source]["total_write_time_ms"] += latency_ms
+                self._save_to_file()
+
+    def get_summary(self) -> Dict[str, Any]:
+        summary = {}
+        for source, data in self.stats.items():
+            fetches = data["fetches"]
+            failures = data["failures"]
+            success_rate = (fetches - failures) / fetches if fetches > 0 else 1.0
+            avg_fetch_latency = data["total_fetch_time_ms"] / fetches if fetches > 0 else 0.0
+            
+            writes = data["writes"]
+            write_failures = data["write_failures"]
+            write_success_rate = (writes - write_failures) / writes if writes > 0 else 1.0
+            avg_write_latency = data["total_write_time_ms"] / writes if writes > 0 else 0.0
+            
+            summary[source] = {
+                "total_fetches": fetches,
+                "fetch_failures": failures,
+                "fetch_success_rate": float(success_rate),
+                "avg_fetch_latency_ms": float(avg_fetch_latency),
+                "total_writes": writes,
+                "write_failures": write_failures,
+                "write_success_rate": float(write_success_rate),
+                "avg_write_latency_ms": float(avg_write_latency),
+                "status": "healthy" if success_rate > 0.9 and write_success_rate > 0.95 else "degraded"
+            }
+        return summary
+
+    def _save_to_file(self):
+        try:
+            summary = self.get_summary()
+            with open(self.log_filepath, "w") as f:
+                json.dump({
+                    "timestamp": datetime.now().isoformat(),
+                    "metrics": summary
+                }, f, indent=2)
+        except Exception as e:
+            logger.error(f"Failed to save ingestion metrics: {e}")
+
+
+# Global instance of the ingestion monitor
+ingestion_monitor = IngestionMonitor()
+
+
 # Example usage
 if __name__ == "__main__":
     # Create monitor
@@ -582,3 +658,61 @@ if __name__ == "__main__":
     # Alert summary
     alert_summary = monitor.get_alerts_summary()
     logger.info(f"\nAlert Summary: {json.dumps(alert_summary, indent=2, default=str)}")
+
+
+# ============================================================================
+# SYSTEM HEALTH, TELEMETRY ALERTS & FLOWER MONITORING
+# ============================================================================
+
+import requests
+from config import api_settings
+
+def check_system_health() -> dict:
+    """Verifies connection health of SQL DB engines, Redis pools, and local models."""
+    from dependencies import engine, get_inference_engine
+    
+    db_ok = False
+    try:
+        from sqlalchemy import text
+        with engine.sync_engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+            db_ok = True
+    except Exception:
+        db_ok = False
+        
+    redis_ok = False
+    try:
+        import redis
+        client = redis.Redis.from_url(api_settings.redis_uri, socket_timeout=1.0)
+        client.ping()
+        redis_ok = True
+    except Exception:
+        redis_ok = False
+
+    model_ok = False
+    try:
+        engine_inst = get_inference_engine()
+        if engine_inst and engine_inst.model is not None:
+            model_ok = True
+    except Exception:
+        model_ok = False
+        
+    status = "healthy" if (db_ok and redis_ok and model_ok) else "degraded"
+    return {
+        "status": status,
+        "database": "connected" if db_ok else "offline",
+        "redis": "connected" if redis_ok else "offline",
+        "model": "loaded" if model_ok else "unloaded",
+        "timestamp": datetime.now().isoformat()
+    }
+
+
+def check_flower_status(flower_url: str = "http://localhost:5555") -> dict:
+    """Verifies Celery Flower daemon dashboard connectivity."""
+    try:
+        res = requests.get(flower_url + "/api/workers", timeout=1.0)
+        if res.status_code == 200:
+            return {"status": "online", "url": flower_url, "workers_count": len(res.json())}
+    except Exception:
+        pass
+    return {"status": "offline", "url": flower_url, "workers_count": 0}

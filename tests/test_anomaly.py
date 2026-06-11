@@ -3,12 +3,16 @@ Comprehensive tests for anomaly detection system.
 Tests individual detectors, ensemble voting, and real-world scenarios.
 """
 
+import os
+import sys
 import unittest
 import numpy as np
 import time
 import logging
 from datetime import datetime
 from unittest.mock import Mock, patch
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from anomaly_detector import AnomalyDetector, AnomalyAlert
 from detectors.zscore_detector import ZScoreDetector, MultiVarZScoreDetector
