@@ -329,3 +329,36 @@ if __name__ == "__main__":
     # Load config
     loaded_config = load_config("config_baseline.json")
     print("✓ Config loaded successfully")
+
+
+# ============================================================================
+# FASTAPI & INGESTION PIPELINE SETTINGS
+# ============================================================================
+
+from pydantic_settings import BaseSettings
+from pydantic import Field
+
+class APISettings(BaseSettings):
+    env: str = Field(default="development", validation_alias="ENV")
+    api_key: str = Field(default="moodmarket_secret_api_key_2026", validation_alias="API_KEY")
+    timescaledb_uri: str = Field(default="postgresql://postgres:postgres@localhost:5432/moodmarket", validation_alias="TIMESCALEDB_URI")
+    redis_uri: str = Field(default="redis://localhost:6379/0", validation_alias="REDIS_URI")
+    rate_limit_per_min: int = Field(default=100, validation_alias="RATE_LIMIT_PER_MIN")
+    enforce_https: bool = Field(default=False, validation_alias="ENFORCE_HTTPS")
+    cors_origins: str = Field(default="*", validation_alias="CORS_ORIGINS")
+    request_timeout_seconds: int = Field(default=30, validation_alias="REQUEST_TIMEOUT_SECONDS")
+    
+    # Ingestion sources credentials (with defaults for testing)
+    reddit_client_id: str = Field(default="mock_reddit_client_id", validation_alias="REDDIT_CLIENT_ID")
+    reddit_client_secret: str = Field(default="mock_reddit_client_secret", validation_alias="REDDIT_CLIENT_SECRET")
+    reddit_user_agent: str = Field(default="moodmarket_scraper", validation_alias="REDDIT_USER_AGENT")
+    
+    news_api_key: str = Field(default="mock_news_api_key", validation_alias="NEWS_API_KEY")
+    
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+        extra = "ignore"
+
+api_settings = APISettings()
+
