@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 import redis.asyncio as aioredis
-from typing import Dict
+from typing import Dict, Any
 
 from models import HealthResponse
 from dependencies import get_db, get_redis, get_inference_engine
@@ -50,3 +50,14 @@ async def health_check(
         "models_loaded": models_loaded,
         "db_connected": db_connected
     }
+
+
+@router.get("/auth/token")
+async def get_auth_token() -> Dict[str, str]:
+    """
+    Generates a valid JWT token signed with the secret for WebSocket authentication.
+    """
+    from authenticator import JWTAuthenticator
+    token = JWTAuthenticator.generate_token("dashboard_user", expires_in_minutes=120)
+    return {"token": token}
+

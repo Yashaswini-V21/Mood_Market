@@ -221,13 +221,14 @@ def generate_synthetic_data(n_samples: int = 10000) -> np.ndarray:
     """Generates a numpy array of synthetic features for model testing/benchmarking."""
     np.random.seed(42)
     # 8 features: sentiment, close, volume, RSI, MACD, BB, google_trends, reddit_hype
-    sentiment = np.random.uniform(-1.0, 1.0, (n_samples, 1))
-    close = np.cumprod(1 + np.random.normal(0, 0.01, (n_samples, 1)))  # Random walk close price
-    volume = np.random.exponential(1000, (n_samples, 1))
-    rsi = np.random.uniform(20, 80, (n_samples, 1))
-    macd = np.random.normal(0, 2, (n_samples, 1))
-    bb = np.random.normal(0, 1, (n_samples, 1))
-    google_trends = np.random.uniform(10, 100, (n_samples, 1))
-    reddit_hype = np.random.exponential(5, (n_samples, 1))
-    
-    return np.hstack([sentiment, close, volume, rsi, macd, bb, google_trends, reddit_hype])
+    # Use 1-D arrays throughout so np.column_stack works cleanly.
+    sentiment = np.random.uniform(-1.0, 1.0, n_samples)
+    close = np.cumprod(1 + np.random.normal(0, 0.01, n_samples))  # Random walk close price
+    volume = np.random.exponential(1000, n_samples)
+    rsi = np.random.uniform(20, 80, n_samples)
+    macd = np.random.normal(0, 2, n_samples)
+    bb = np.random.normal(0, 1, n_samples)
+    google_trends = np.random.uniform(10, 100, n_samples)
+    reddit_hype = np.random.exponential(5, n_samples)
+
+    return np.column_stack([sentiment, close, volume, rsi, macd, bb, google_trends, reddit_hype])

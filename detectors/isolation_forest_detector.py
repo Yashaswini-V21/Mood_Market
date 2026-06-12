@@ -132,8 +132,10 @@ class IsolationForestDetector(BaseDetector):
         is_anomaly = (prediction == -1)
         
         # Convert score to confidence (0-1)
-        # Score is typically in range [-1, 0], we normalize to [0, 1]
-        confidence = max(0, min(1, -score / 2))  # -0.5 → 0.5 conf, -1.0 → 1.0 conf
+        # score_samples returns negative values; more negative = more anomalous.
+        # Typical range: [-0.8, 0]. Normalize so extreme outliers reach >0.5.
+        raw_conf = max(0.0, -score)  # 0 to ~0.8
+        confidence = min(raw_conf * 1.5, 0.99)  # scale up: 0.4 raw -> 0.6 conf
         
         return DetectionResult(
             anomaly_detected=is_anomaly,
