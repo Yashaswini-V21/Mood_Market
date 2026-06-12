@@ -482,24 +482,26 @@ class TestFinancialTextExamples(unittest.TestCase):
         tokens = reddit_post.split()
         # Simulate SHAP values (more positive for positive words)
         shap_values = [0.1] * len(tokens)
+        # tokens from .split() include punctuation, so use exact token strings
         shap_values[tokens.index("crushing")] = 0.5
-        shap_values[tokens.index("massive")] = 0.4
+        shap_values[tokens.index("massive.")] = 0.4   # trailing period from split()
         shap_values[tokens.index("🚀")] = 0.3
-        
+
         summary = self.visualizer.create_summary_plot(
             [tokens],
             [shap_values],
             max_display=5
         )
-        
+
         self.assertEqual(summary["type"], "summary")
     
     def test_news_headline(self):
         """Test with news headline"""
         headline = "Fed raises rates amid inflation concerns, market declines"
         tokens = headline.split()
-        shap_values = [0.05, -0.1, -0.15, -0.2, -0.25, -0.1]
-        
+        # shap_values must match len(tokens) exactly (8 tokens here)
+        shap_values = [0.05, -0.1, -0.15, -0.2, -0.25, -0.1, -0.05, -0.3]
+
         bundle = self.visualizer.create_frontend_bundle(
             0.0,
             tokens,
@@ -507,7 +509,7 @@ class TestFinancialTextExamples(unittest.TestCase):
             headline,
             model_name="finbert"
         )
-        
+
         self.assertEqual(bundle["model"], "finbert")
         self.assertLess(bundle["summary"]["negative_contribution"], 0)
 

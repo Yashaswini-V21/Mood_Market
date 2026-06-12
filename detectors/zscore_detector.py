@@ -114,11 +114,9 @@ class ZScoreDetector(BaseDetector):
         is_anomaly = abs(z_score) > self.threshold
         
         # Confidence increases with |z_score|
-        # Saturates at |z_score| = 5σ (0.9999 confidence)
-        confidence = min(
-            (abs(z_score) / 5.0) ** 1.5,
-            0.99
-        )
+        # Formula: 1 - exp(-k * excess - 0.5 * z/thresh) gives >0.8 at 4σ
+        excess = max(0.0, abs(z_score) - self.threshold)
+        confidence = min(1.0 - np.exp(-1.5 * excess - 0.5 * (abs(z_score) / self.threshold)), 0.99)
         
         # Add history
         self.history.append(observation)

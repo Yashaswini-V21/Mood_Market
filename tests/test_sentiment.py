@@ -256,7 +256,8 @@ class TestModelComparisonTracker(unittest.TestCase):
         )
         
         stats = self.tracker.get_agreement_stats()
-        self.assertTrue("finbert vs distilbert" in stats)
+        # Keys are sorted alphabetically: "distilbert vs finbert"
+        self.assertTrue("distilbert vs finbert" in stats)
     
     def test_disagreement_detection(self):
         """Test disagreement detection"""

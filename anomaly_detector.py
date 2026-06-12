@@ -64,6 +64,18 @@ class TickerBaseline:
     twitter_std: float
     last_updated: datetime
 
+    def to_dict(self) -> Dict:
+        return {
+            "ticker": self.ticker,
+            "reddit_mean": self.reddit_mean,
+            "reddit_std": self.reddit_std,
+            "google_trends_mean": self.google_trends_mean,
+            "google_trends_std": self.google_trends_std,
+            "twitter_mean": self.twitter_mean,
+            "twitter_std": self.twitter_std,
+            "last_updated": self.last_updated.isoformat(),
+        }
+
 
 class AnomalyDetector:
     """
@@ -355,11 +367,12 @@ class AnomalyDetector:
         """
         # Alert type logic
         if abs(reddit_zscore) > 5 and google_trends_spike and ewma_triggered:
-            alert_type = "HYPE_STORM"  # Extreme multi-source spike
+            alert_type = "HYPE_STORM"  # Full multi-source extreme spike
             recommendation = "REDUCE_POSITION_SIZE"
         elif abs(reddit_zscore) > 4 and vote_ratio > 0.7:
-            alert_type = "EXTREME_SPIKE"
-            recommendation = "REVIEW_POSITION"
+            # High-confidence extreme spike — classify as HYPE_STORM
+            alert_type = "HYPE_STORM"
+            recommendation = "REDUCE_POSITION_SIZE"
         elif abs(reddit_zscore) > 3 and google_trends_spike:
             alert_type = "MAJOR_SPIKE"
             recommendation = "INVESTIGATE"
@@ -369,7 +382,7 @@ class AnomalyDetector:
         else:
             alert_type = "ANOMALY_DETECTED"
             recommendation = "INVESTIGATE"
-        
+
         return alert_type, recommendation
     
     def get_alert_summary(self, ticker: str) -> Dict:
