@@ -48,8 +48,13 @@ class CacheManager:
             return False
 
     def _check_reconnect(self):
-        """Attempts to reconnect if the client is currently marked offline (rate-limited to every 10 seconds)."""
+        """Attempts to reconnect if the client is currently marked offline (rate-limited to every 10 seconds).
+        Skipped entirely in test mode to avoid blocking reconnect timeouts.
+        """
         if not self.is_available:
+            # Never retry in test mode — avoids 2-second blocking socket timeouts
+            if api_settings.env == "test":
+                return
             now = time.time()
             if now - self._last_reconnect_attempt > 10.0:
                 self._last_reconnect_attempt = now

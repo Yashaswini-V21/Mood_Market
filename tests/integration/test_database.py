@@ -37,6 +37,14 @@ class TestDatabaseSchemaAndQueries(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         # 1. Run migrations to initialize schema (Postgres or SQLite fallback)
         await run_all_migrations()
+        # 2. Clean tables to guarantee test case isolation
+        from sqlalchemy import text
+        async for session in get_db_session():
+            await session.execute(text("DELETE FROM price_data"))
+            await session.execute(text("DELETE FROM sentiment_data"))
+            await session.commit()
+
+
         
     async def test_insert_and_query_price(self):
         now = datetime.utcnow()

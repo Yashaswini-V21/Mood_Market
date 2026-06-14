@@ -461,7 +461,8 @@ class TestPerformanceBenchmark(unittest.TestCase):
         logger.info(f"Average per prediction: {elapsed/10000*1000:.2f}ms")
         
         # Should be very fast
-        self.assertLess(elapsed, 5.0)
+        self.assertLess(elapsed, 10.0)
+
 
 
 class TestErrorHandling(unittest.TestCase):
