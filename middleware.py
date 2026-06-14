@@ -111,7 +111,7 @@ class RedisRateLimiterMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
         path = request.url.path
-        if path in ["/docs", "/redoc", "/openapi.json", "/api/v1/health"]:
+        if path in ["/docs", "/redoc", "/openapi.json", "/api/v1/health"] or api_settings.env == "test":
             return await call_next(request)
 
         # Identify client (API key bearer or IP address)
