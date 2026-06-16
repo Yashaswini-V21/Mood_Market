@@ -142,10 +142,11 @@ async def run_migration_file(filepath: str):
 async def run_all_migrations():
     """Runs initial schema setup followed by incremental column additions."""
     try:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         # 1. Run 001_initial_schema
-        await run_migration_file("migrations/001_initial_schema.sql")
+        await run_migration_file(os.path.join(base_dir, "migrations", "001_initial_schema.sql"))
         # 2. Run 002_add_columns
-        await run_migration_file("migrations/002_add_columns.sql")
+        await run_migration_file(os.path.join(base_dir, "migrations", "002_add_columns.sql"))
         logger.info("✓ All database migrations executed successfully.")
     except Exception as e:
         logger.error(f"Database migrations failed: {e}")

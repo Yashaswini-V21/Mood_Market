@@ -24,8 +24,8 @@ class AgentOrchestrator:
     
     def __init__(self, config_path: str = "agent_config.yaml"):
         self.config_path = config_path
-        self.config = self._load_config()
         self.logger = logger
+        self.config = self._load_config()
         
         # Load global settings
         global_cfg = self.config.get("global", {})
