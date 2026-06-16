@@ -62,7 +62,7 @@ uvicorn==0.27.0
 celery==5.3.6
 flask==3.0.0
 requests==2.31.0
-pyjwt==2.8.0
+pyjwt==2.13.0
 websockets==12.0
 
 # Utilities
