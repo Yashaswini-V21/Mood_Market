@@ -1,0 +1,39 @@
+# Informer Forecasting Model Training Configuration
+
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 1e-4
+  grad_clip: 1.0
+  weight_decay: 1e-5
+  patience: 15
+  accumulation_steps: 4
+  scheduler_T0: 10
+  scheduler_Tmult: 2
+  seed: 42
+
+data:
+  seq_len: 72                  # Lookback sequence steps (24 hours of 15-min candles)
+  pred_len: 1                  # Forecast horizon (next 4 hours)
+  train_ratio: 0.65            # 65% training split
+  val_ratio: 0.15              # 15% validation split
+  test_ratio: 0.20             # 20% held-out test split
+  csv_path: ""                 # Path to real 3-year OHLCV CSV file (generates synthetic data if empty)
+
+model:
+  enc_in: 8                    # 8 input features
+  dec_in: 8                    # 8 decoder input features
+  c_out: 1                     # 1 binary prediction output (up/down probability)
+  d_model: 512                 # Latent representation dimension
+  n_heads: 8                   # Number of attention heads
+  n_encoder_layers: 2          # Encoder stack depth
+  n_decoder_layers: 2          # Decoder stack depth
+  d_ff: 2048                   # Feed-forward hidden dimension
+  dropout: 0.1                 # Dropout rate
+  factor: 5                    # Sparsity factor for ProbSparse attention
+
+optuna:
+  n_trials: 10                 # Number of hyperparameter trials for Optuna optimization
+  timeout_seconds: 600         # 10 minutes limit for fast trial search during testing
+
+# clean architecture alignment

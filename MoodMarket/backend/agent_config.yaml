@@ -1,0 +1,53 @@
+# Multi-Agent Orchestration Configuration
+global:
+  cache_ttl_seconds: 300       # 5 minutes TTL
+  timeout_seconds: 30          # 30 seconds max execution per agent
+  default_ticker: "AAPL"
+
+sentiment_agent:
+  ensemble_enabled: false
+  min_confidence: 0.7
+  device: "cpu"                # Use CPU for fallback/standard inference to prevent memory leaks
+  weights:
+    finbert: 0.6
+    distilbert: 0.4
+  lexicon:                     # Lexicon fallback for offline mode
+    positive: ["surge", "gain", "profit", "bullish", "growth", "buy", "upbeat", "record", "beats", "innovation", "outperform", "success"]
+    negative: ["crash", "loss", "decline", "bearish", "drop", "sell", "regulatory", "disappoint", "down", "investigate", "lawsuit", "fines"]
+    neutral: ["hold", "flat", "market", "stock", "price", "quarter", "report", "earnings", "meeting", "company", "shareholder", "update"]
+
+technical_agent:
+  rsi:
+    period: 14
+    overbought: 70.0
+    oversold: 30.0
+  macd:
+    fast_period: 12
+    slow_period: 26
+    signal_period: 9
+  bollinger_bands:
+    period: 20
+    std_dev: 2.0
+  support_resistance:
+    window: 20                  # Window size to find local min/max for support/resistance
+
+forecaster_agent:
+  seq_len: 72                  # 24 hours of 15-min candles
+  pred_len: 1                  # Next 4 hours prediction
+  model_path: "checkpoints/best_model.pt"
+  fallback_to_random: true      # Fallback to random/heuristic prediction if model doesn't exist
+  probability_threshold: 0.5    # Probability threshold for directional prediction
+
+risk_manager_agent:
+  default_position_size: "2%"  # Max 2% risk of total capital
+  stop_loss_pct: 0.02          # 2% stop loss
+  take_profit_pct: 0.05        # 5% take profit
+  max_loss_usd: 150.0          # Max dollar loss limit per trade
+
+synthesizer_agent:
+  confidence_weights:
+    sentiment: 0.3
+    technical: 0.3
+    forecasting: 0.4
+
+# clean architecture alignment

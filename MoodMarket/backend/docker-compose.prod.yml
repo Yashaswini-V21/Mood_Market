@@ -1,0 +1,225 @@
+version: '3.9'
+
+services:
+  # PostgreSQL TimescaleDB (Production configuration)
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: moodmarket_postgres_prod
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: moodmarket
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+      - ./docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    # Ports NOT exposed directly for production security
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+    restart: always
+
+  # Redis Cache & Broker (Production configuration)
+  redis:
+    image: redis:7-alpine
+    container_name: moodmarket_redis_prod
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-moodmarket_redis_secure_pass}
+    volumes:
+      - redis_data_prod:/data
+    expose:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-moodmarket_redis_secure_pass}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    restart: always
+
+  # FastAPI Backend (Production application server)
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moodmarket_backend_prod
+    environment:
+      TIMESCALEDB_URI: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      REDIS_URI: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      REDIS_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      ENVIRONMENT: production
+      ENV: production
+      DEBUG: "false"
+      SECRET_KEY: ${SECRET_KEY}
+    expose:
+      - "8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # CMD launches uvicorn without reload for performance
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+    restart: always
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moodmarket_worker_prod
+    environment:
+      TIMESCALEDB_URI: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      REDIS_URI: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      REDIS_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      ENVIRONMENT: production
+      ENV: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: celery -A celery_app worker -l info -c 4 -Q default,priority,low,critical
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 1.5G
+    restart: always
+
+  # Celery Beat (Scheduler)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moodmarket_beat_prod
+    environment:
+      TIMESCALEDB_URI: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/moodmarket
+      REDIS_URI: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      REDIS_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      ENVIRONMENT: production
+      ENV: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: celery -A celery_app beat -l info
+    restart: always
+
+  # Flower Monitoring (Hidden behind login in production optionally)
+  flower:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: moodmarket_flower_prod
+    environment:
+      REDIS_URI: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      REDIS_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+      CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:-moodmarket_redis_secure_pass}@redis:6379/0
+    ports:
+      - "5555:5555"
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: celery -A celery_app flower --port=5555
+    restart: always
+
+  # React Frontend (Production build served via Node serve package)
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: moodmarket_frontend_prod
+    expose:
+      - "3000"
+    environment:
+      VITE_API_URL: /api/v1
+      VITE_WS_URL: /ws
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    restart: always
+
+  # Nginx Gateway & Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: moodmarket_nginx_prod
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+
+  # Kafka (KRaft mode single-node event streaming)
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: moodmarket_kafka_prod
+    expose:
+      - "9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REREPLICATION_FACTOR: 1
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+    restart: always
+
+volumes:
+  postgres_data_prod:
+  redis_data_prod:
+
+networks:
+  default:
+    name: moodmarket-network-prod
+
+# clean architecture alignment

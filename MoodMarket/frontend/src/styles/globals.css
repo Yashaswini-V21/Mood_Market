@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import './mobile.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ──────────────────────────────────────────── */
+:root {
+  --color-bullish:  #10B981;
+  --color-bearish:  #EF4444;
+  --color-neutral:  #6B7280;
+  --color-warning:  #F59E0B;
+  --color-signal:   #3B82F6;
+  --color-negative: #F43F5E;
+  --color-hype:     #A855F7;
+
+  --surface-950: #020617;
+  --surface-900: #0f172a;
+  --surface-800: #1e293b;
+  --surface-700: #334155;
+
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  32px;
+  --spacing-2xl: 48px;
+
+  --radius-card:  12px;
+  --radius-badge: 6px;
+
+  --transition-fast:   150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow:   300ms ease;
+}
+
+/* ─── Base Reset ────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    @apply bg-cyan-500/30 text-cyan-100;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-slate-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-700 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+}
+
+/* ─── Glass-morphism Utilities ──────────────────────────────── */
+@layer utilities {
+  .glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-strong {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    @apply glass rounded-card shadow-card;
+  }
+
+  /* Gradient text */
+  .text-gradient-bullish {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-bearish {
+    background: linear-gradient(135deg, #EF4444, #F87171);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow effects */
+  .glow-bullish { box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+  .glow-bearish { box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);  }
+  .glow-warning { box-shadow: 0 0 20px rgba(245, 158, 11, 0.25); }
+  .glow-signal  { box-shadow: 0 0 20px rgba(59, 130, 246, 0.25); }
+  .glow-hype    { box-shadow: 0 0 20px rgba(168, 85, 247, 0.25); }
+
+  /* Subtle inner glow borders */
+  .border-bullish-glow { border-color: rgba(16, 185, 129, 0.3); }
+  .border-bearish-glow { border-color: rgba(239, 68, 68, 0.3);  }
+
+  /* Mono data font */
+  .font-data { @apply font-mono tabular-nums; }
+
+  /* Chart grid */
+  .chart-grid { stroke: rgba(255,255,255,0.06); }
+
+  /* Pulse dot */
+  .live-dot::before {
+    content: '';
+    @apply inline-block w-2 h-2 rounded-full bg-emerald-400 mr-2;
+    animation: pulseLive 1.5s ease-in-out infinite;
+  }
+
+  /* Ticker scroll */
+  .ticker-scroll {
+    animation: tickerScroll 30s linear infinite;
+  }
+
+  @keyframes tickerScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes pulseLive {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* Number change flash */
+  .flash-green { animation: flashGreen 300ms ease-out; }
+  .flash-red   { animation: flashRed 300ms ease-out;   }
+
+  @keyframes flashGreen {
+    0%   { color: #10B981; }
+    100% { color: inherit; }
+  }
+  @keyframes flashRed {
+    0%   { color: #EF4444; }
+    100% { color: inherit; }
+  }
+
+  /* Sentiment dial ring */
+  .sentiment-ring {
+    background: conic-gradient(
+      #10B981 0deg,
+      #F59E0B 120deg,
+      #EF4444 240deg,
+      #334155 240deg
+    );
+  }
+
+  /* Live feed slide-in animation */
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Collapsible expand animation */
+  .animate-slide-down {
+    animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+    to   { opacity: 1; transform: translateY(0);     max-height: 2000px; }
+  }
+
+  /* Fade in animation */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Shimmer loading skeleton */
+  .shimmer {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Number flash on update */
+  .flash-update {
+    animation: flashUpdate 400ms ease-out;
+  }
+  @keyframes flashUpdate {
+    0%, 100% { color: inherit; }
+    40%       { color: #06b6d4; text-shadow: 0 0 8px rgba(6,182,212,0.6); }
+  }
+
+  /* Gradient border pulse (for highlighted cards) */
+  .border-pulse {
+    animation: borderPulse 3s ease-in-out infinite;
+  }
+  @keyframes borderPulse {
+    0%, 100% { border-color: rgba(255,255,255,0.06); }
+    50%       { border-color: rgba(6,182,212,0.30); }
+  }
+
+  /* Slide up for dropdowns */
+  .animate-slide-up {
+    animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Bounce in for tooltips */
+  .animate-bounce-in {
+    animation: bounceIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes bounceIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Stagger animation helpers */
+  .stagger-1 { animation-delay: 50ms; }
+  .stagger-2 { animation-delay: 100ms; }
+  .stagger-3 { animation-delay: 150ms; }
+  .stagger-4 { animation-delay: 200ms; }
+  .stagger-5 { animation-delay: 250ms; }
+
+  /* Scanning line effect for AI loading */
+  .scan-line {
+    position: relative;
+    overflow: hidden;
+  }
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+    animation: scanLine 2s linear infinite;
+  }
+  @keyframes scanLine {
+    from { top: -2px; }
+    to   { top: 100%; }
+  }
+
+  /* Typing cursor blink */
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: #06b6d4;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* Price change direction arrows */
+  .price-up   { color: #10B981; }
+  .price-down { color: #EF4444; }
+
+  /* Gradient backgrounds for cards */
+  .bg-bullish-gradient { background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, transparent 60%); }
+  .bg-bearish-gradient { background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, transparent 60%); }
+  .bg-hype-gradient    { background: linear-gradient(135deg, rgba(245,158,11,0.08) 0%, transparent 60%); }
+}
+
+
+/* ─── Component Utilities ────────────────────────────────────── */
+@layer components {
+  /* Card */
+  .card {
+    @apply glass-card p-4 transition-all duration-200;
+  }
+  .card:hover {
+    border-color: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg
+           font-medium text-sm transition-all duration-150 focus:outline-none
+           focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900
+           disabled:opacity-50 disabled:cursor-not-allowed select-none;
+  }
+  .btn-primary {
+    @apply btn bg-emerald-600 hover:bg-emerald-500 text-white
+           focus:ring-emerald-500 active:scale-95;
+  }
+  .btn-secondary {
+    @apply btn bg-rose-600 hover:bg-rose-500 text-white
+           focus:ring-rose-500 active:scale-95;
+  }
+  .btn-ghost {
+    @apply btn bg-slate-800 hover:bg-slate-700 text-slate-300
+           border border-slate-700 hover:border-slate-600
+           focus:ring-slate-500 active:scale-95;
+  }
+  .btn-icon {
+    @apply h-9 w-9 px-0 rounded-lg bg-slate-800 hover:bg-slate-700
+           text-slate-400 hover:text-slate-200 border border-slate-700
+           transition-all duration-150 inline-flex items-center justify-center;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full h-10 px-3 rounded-lg bg-slate-800 border border-slate-700
+           text-slate-100 placeholder-slate-500 text-sm
+           focus:outline-none focus:border-cyan-500 focus:ring-2
+           focus:ring-cyan-500/20 transition-all duration-150;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-badge
+           text-xs font-semibold uppercase tracking-wide;
+  }
+  .badge-bullish  { @apply badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/25; }
+  .badge-bearish  { @apply badge bg-rose-500/15 text-rose-400 border border-rose-500/25; }
+  .badge-neutral  { @apply badge bg-slate-500/20 text-slate-400 border border-slate-500/25; }
+  .badge-warning  { @apply badge bg-amber-500/15 text-amber-400 border border-amber-500/25; }
+  .badge-hype     { @apply badge bg-purple-500/15 text-purple-400 border border-purple-500/25; }
+  .badge-critical { @apply badge bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse; }
+}
+
+/* clean architecture alignment */

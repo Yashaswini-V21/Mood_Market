@@ -26,10 +26,10 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
 
     - name: Install dependencies
-      run: cd frontend && npm ci
+      run: cd MoodMarket/frontend && npm ci
 
     - name: Build production bundle
-      run: cd frontend && npm run build
+      run: cd MoodMarket/frontend && npm run build
       env:
         NODE_ENV: production
 
@@ -38,7 +38,7 @@ jobs:
 
     - name: Serve production build and run Lighthouse
       run: |
-        cd frontend
+        cd MoodMarket/frontend
         # Start static server in background
         npx serve -s dist -p 3000 &
         SERVER_PID=$!
@@ -97,11 +97,11 @@ jobs:
         cache-dependency-path: frontend/package-lock.json
 
     - name: Install dependencies
-      run: cd frontend && npm ci
+      run: cd MoodMarket/frontend && npm ci
 
     - name: Build and analyze bundle
       run: |
-        cd frontend
+        cd MoodMarket/frontend
         npm run build 2>&1
         echo "=== Bundle Size Report ===" 
         du -sh dist/
@@ -114,5 +114,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: production-bundle
-        path: frontend/dist/
+        path: MoodMarket/frontend/dist/
         retention-days: 7
