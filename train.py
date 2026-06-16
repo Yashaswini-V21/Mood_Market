@@ -4,10 +4,11 @@ import yaml
 import torch
 import numpy as np
 import pandas as pd
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional
 import logging
 from torch.utils.tensorboard import SummaryWriter
-import optuna
+# optuna is imported lazily inside run_optuna_tuning() to avoid
+# requiring it in CI environments that only run tests.
 from pathlib import Path
 
 from model import Informer, InformerConfig
@@ -149,6 +150,8 @@ def train_single_run(
 
 def run_optuna_tuning(config: Dict[str, Any], device: torch.device, checkpoint_dir: str) -> Dict[str, Any]:
     """Runs Optuna hyperparameter optimization to find the best configuration."""
+    import optuna  # lazy import — not needed for basic training/testing
+
     n_trials = config["optuna"].get("n_trials", 10)
     timeout = config["optuna"].get("timeout_seconds", 600)
     

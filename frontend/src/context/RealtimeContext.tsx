@@ -64,7 +64,7 @@ export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
   }, [isWSDown, ticker]);
 
   // Fetch from fallback REST routes
-  const triggerFallbackFetch = async () => {
+  async function triggerFallbackFetch() {
     const cleanTicker = ticker.toUpperCase().trim();
     const headers = {
       'Authorization': 'Bearer moodmarket_secret_api_key_2026',

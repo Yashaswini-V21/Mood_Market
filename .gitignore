@@ -1,34 +1,81 @@
-# Byte-compiled / optimized / DLL files
+# ─── Python ──────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
 
-# PyTorch checkpoints and training outputs
+# ─── Virtual Environments ────────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ─── Testing & Coverage ──────────────────────────────────────────────────────
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.tox/
+
+# ─── PyTorch / ML Artefacts ──────────────────────────────────────────────────
 checkpoints/
 runs/
 *.pt
 *.npz
+*.pkl
+*.h5
+training_history.json
+temp_model.pt
+temp_quant.pt
 
-# Operating System Files
-.DS_Store
-Thumbs.db
-
-# Virtual Environment
-venv/
-.venv/
-env/
-
-# Data and Logs
-*.log
+# ─── Generated Results & Plots ───────────────────────────────────────────────
 results/equity_curves.json
 results/metrics_comparison.json
 results/benchmark_results.csv
 results/*.png
-training_history.json
+results/*.jpg
 benchmark_results.json
-temp_model.pt
-temp_quant.pt
 
-# Environment configuration
+# ─── Logs ────────────────────────────────────────────────────────────────────
+logs/
+*.log
+*.log.*
+
+# ─── Database files ──────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ─── Environment & Secrets ───────────────────────────────────────────────────
 .env
 .env.*
+!.env.example
+
+# ─── Frontend Build Artefacts ────────────────────────────────────────────────
+frontend/dist/
+frontend/node_modules/
+frontend/.parcel-cache/
+
+# ─── IDE & OS ────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ─── Docker Volumes ──────────────────────────────────────────────────────────
+docker/volumes/
+
+# ─── Notebooks (auto-generated checkpoints) ──────────────────────────────────
+notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# ─── Empty directories ───────────────────────────────────────────────────────
+notebooks/

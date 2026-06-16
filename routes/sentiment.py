@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import redis.asyncio as aioredis
 import json
 import logging
@@ -11,22 +11,27 @@ from models import SentimentResponse, PredictSentimentRequest, PredictSentimentR
 from dependencies import get_db, get_redis, get_inference_engine, verify_api_key
 from exceptions import DatabaseException, AuthException
 from cache import cache_manager
+from decorators import validate_ticker
 
 router = APIRouter()
 logger = logging.getLogger("routes.sentiment")
 
-# Lexicon lists for real-time text analysis fallback
+# Lexicon word sets for rule-based sentiment fallback when transformer models are unavailable
 POSITIVE_WORDS = {
-    "surge", "gain", "profit", "bullish", "growth", "buy", "upbeat", "record", 
-    "beats", "innovation", "outperform", "success", "green", "climb", "high", "positive"
+    "surge", "gain", "profit", "bullish", "growth", "buy", "upbeat", "record",
+    "beats", "innovation", "outperform", "success", "green", "climb", "high", "positive",
+    "rally", "breakout", "upgrade", "momentum", "earnings", "dividend", "recovery",
 }
+
 NEGATIVE_WORDS = {
-    "crash", "loss", "decline", "bearish", "drop", "sell", "regulatory", "disappoint", 
-    "down", "investigate", "lawsuit", "fines", "red", "sink", "low", "fail", "negative"
+    "crash", "loss", "decline", "bearish", "drop", "sell", "regulatory", "disappoint",
+    "down", "investigate", "lawsuit", "fines", "red", "sink", "low", "fail", "negative",
+    "plunge", "downgrade", "recession", "warning", "layoff", "default", "bankruptcy",
 }
 
 
 @router.get("/sentiment/{ticker}", response_model=SentimentResponse)
+@validate_ticker
 async def get_latest_sentiment(
     ticker: str,
     lookback_hours: int = Query(default=24, ge=1, le=720),
@@ -48,7 +53,7 @@ async def get_latest_sentiment(
 
     # 2. Query TimescaleDB
     # Calculate cutoff time based on lookback hours
-    cutoff_time = datetime.utcnow() - timedelta(hours=lookback_hours)
+    cutoff_time = datetime.now(timezone.utc) - timedelta(hours=lookback_hours)
     
     try:
         query = text(
@@ -97,7 +102,7 @@ async def predict_custom_sentiment(
         # Lazily instantiate model if possible
         device = "cpu"  # Keep CPU-friendly for API threads
         ensemble = SentimentEnsemble(cache_enabled=False, device=device)
-        result = ensemble.analyze_text(text_input)
+        result = ensemble.analyze_single(text_input)
         
         sentiment = result.sentiment_score
         confidence = result.confidence

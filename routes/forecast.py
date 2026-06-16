@@ -12,12 +12,14 @@ from models import PriceForecastResponse
 from dependencies import get_db, get_redis, get_inference_engine, verify_api_key
 from exceptions import DatabaseException
 from cache import cache_manager
+from decorators import validate_ticker
 
 router = APIRouter()
 logger = logging.getLogger("routes.forecast")
 
 
 @router.get("/price/forecast/{ticker}", response_model=PriceForecastResponse)
+@validate_ticker
 async def get_price_forecast(
     ticker: str,
     confidence_level: float = Query(default=0.95, ge=0.50, le=0.99),

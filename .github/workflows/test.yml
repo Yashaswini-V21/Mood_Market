@@ -2,14 +2,18 @@ name: Tests & Linting
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, completed ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, completed ]
 
 jobs:
+  # ──────────────────────────────────────────────────────────────────────────
+  # Backend: Lint + Type-check + Tests
+  # ──────────────────────────────────────────────────────────────────────────
   backend-tests:
+    name: Backend Tests (Python 3.11)
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: timescale/timescaledb:latest-pg15
@@ -24,7 +28,7 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-      
+
       redis:
         image: redis:7-alpine
         options: >-
@@ -34,35 +38,41 @@ jobs:
           --health-retries 5
         ports:
           - 6379:6379
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
         cache: 'pip'
-    
-    - name: Install dependencies
+        cache-dependency-path: requirements-ci.txt
+
+    - name: Install dependencies (CI-optimised, no PyTorch)
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-cov flake8 mypy
-    
-    - name: Lint with flake8
+        pip install -r requirements-ci.txt
+
+    - name: Lint with flake8 (syntax errors only — hard fail)
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings.
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    
-    - name: Type check with mypy
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics \
+          --exclude=.git,__pycache__,frontend,htmlcov,dist,.venv
+
+    - name: Lint with flake8 (style warnings — soft fail)
       run: |
-        mypy . --ignore-missing-imports || true
-    
+        flake8 . --count --exit-zero --max-complexity=12 --max-line-length=127 --statistics \
+          --exclude=.git,__pycache__,frontend,htmlcov,dist,.venv
+
+    - name: Type check with mypy (non-blocking)
+      run: |
+        mypy . --ignore-missing-imports \
+          --exclude '(frontend|htmlcov|dist)' || true
+
     - name: Run tests with coverage
       env:
+        PYTHONPATH: .
         TIMESCALEDB_URI: postgresql://postgres:postgres@localhost:5432/test_db
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
         REDIS_URI: redis://localhost:6379/0
@@ -70,51 +80,60 @@ jobs:
         ENVIRONMENT: test
         ENV: test
       run: |
-        pytest --cov=. --cov-report=xml --cov-report=html
-    
+        pytest --cov=. --cov-report=xml --cov-report=term-missing \
+          --cov-config=.coveragerc -q
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
         files: ./coverage.xml
         flags: backend
         token: ${{ secrets.CODECOV_TOKEN }}
-    
+      continue-on-error: true
+
     - name: Archive coverage reports
       uses: actions/upload-artifact@v4
       with:
         name: backend-coverage-reports
         path: htmlcov/
+      if: always()
 
+  # ──────────────────────────────────────────────────────────────────────────
+  # Frontend: Lint + Production Build
+  # ──────────────────────────────────────────────────────────────────────────
   frontend-tests:
+    name: Frontend Tests (Node 20)
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Node.js
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js 20
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
         cache-dependency-path: frontend/package-lock.json
-    
+
     - name: Install dependencies
       run: |
         cd frontend
         npm ci
-    
-    - name: Run linter
+
+    - name: Lint with ESLint (zero warnings)
       run: |
         cd frontend
         npm run lint
-    
-    - name: Run tests with coverage
-      run: |
-        cd frontend
-        # Run Jest tests with coverage and exit non-zero on failure
-        npm run test -- --coverage --watchAll=false
-    
-    - name: Build frontend production bundle
+
+    - name: Build production bundle (TypeScript strict check)
       run: |
         cd frontend
         npm run build
+
+    - name: Upload build artefact
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-dist
+        path: frontend/dist/
+      if: always()

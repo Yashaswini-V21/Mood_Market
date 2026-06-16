@@ -1,3 +1,4 @@
+ 
 import { Signal, SignalType, SignalComponent, PositionSizingData, BacktestingData } from '../types/trading';
 
 /**
@@ -172,3 +173,4 @@ export function generateTradingSignal(
     timestamp: new Date().toISOString()
   };
 }
+

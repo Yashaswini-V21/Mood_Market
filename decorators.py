@@ -51,3 +51,24 @@ def cached(ttl: int, prefix: str):
             return result
         return wrapper
     return decorator
+
+
+def validate_ticker(func: Callable[..., Any]):
+    """
+    Decorator to validate that the 'ticker' parameter is a valid format.
+    Must be a string of 1 to 5 alphabetical characters.
+    """
+    import re
+    from fastapi import HTTPException
+    
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        ticker = kwargs.get("ticker")
+        if ticker is not None:
+            if not isinstance(ticker, str) or not re.match(r"^[A-Za-z]{1,5}$", ticker):
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Invalid ticker symbol: '{ticker}'. Must be 1 to 5 alphabetical characters."
+                )
+        return await func(*args, **kwargs)
+    return wrapper

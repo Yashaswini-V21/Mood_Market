@@ -5,7 +5,6 @@ Modify these settings to experiment with different configurations
 
 from dataclasses import dataclass
 from typing import Optional
-import torch
 
 
 @dataclass
@@ -336,9 +335,11 @@ if __name__ == "__main__":
 # ============================================================================
 
 from pydantic_settings import BaseSettings
-from pydantic import Field
+from pydantic import Field, model_validator, ConfigDict
 
 class APISettings(BaseSettings):
+    model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
     env: str = Field(default="development", validation_alias="ENV")
     api_key: str = Field(default="moodmarket_secret_api_key_2026", validation_alias="API_KEY")
     timescaledb_uri: str = Field(default="postgresql://postgres:postgres@localhost:5432/moodmarket", validation_alias="TIMESCALEDB_URI")
@@ -355,10 +356,17 @@ class APISettings(BaseSettings):
     
     news_api_key: str = Field(default="mock_news_api_key", validation_alias="NEWS_API_KEY")
     
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        extra = "ignore"
+    @model_validator(mode="after")
+    def validate_prod_settings(self) -> "APISettings":
+        """Validate production configuration to prevent security misconfigurations."""
+        if self.env == "production":
+            if self.api_key == "moodmarket_secret_api_key_2026":
+                raise ValueError("API_KEY must be explicitly set in production!")
+            if self.cors_origins == "*":
+                raise ValueError("CORS wildcard '*' is not allowed in production! Restrict to frontend origin.")
+            if not self.enforce_https:
+                raise ValueError("HTTPS must be enforced in production! Set ENFORCE_HTTPS=true")
+        return self
 
 api_settings = APISettings()
 

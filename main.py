@@ -142,6 +142,7 @@ app.add_middleware(
 # 3. Setup Custom Exception Handlers
 register_exception_handlers(app)
 
+
 # 4. Import and Register Route Sub-Routers
 from routes import (
     health,
@@ -165,6 +166,19 @@ app.include_router(watchlist.router, prefix="/api/v1", tags=["Watchlist"])
 # Bind WebSocket and HTTP Fallback endpoints
 import websocket_server
 app.include_router(websocket_server.router, tags=["WebSockets"])
+
+
+# 5. Setup Prometheus Metrics Instrumentator
+# Must be set up AFTER all routers are registered to avoid
+# '_IncludedRouter' attribute errors in newer Starlette versions.
+import os as _os
+if _os.environ.get("ENVIRONMENT") != "test" and _os.environ.get("ENV") != "test":
+    try:
+        from prometheus_fastapi_instrumentator import Instrumentator
+        Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+        logger.info("✓ Prometheus metrics instrumentator initialized at /metrics")
+    except Exception as e:
+        logger.warning(f"Failed to initialize Prometheus metrics instrumentator: {e}")
 
 
 @app.get("/")

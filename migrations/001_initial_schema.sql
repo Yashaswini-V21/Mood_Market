@@ -154,17 +154,17 @@ ALTER TABLE predictions SET (timescaledb.compress, timescaledb.compress_segmentb
 ALTER TABLE anomalies SET (timescaledb.compress, timescaledb.compress_segmentby = 'ticker', timescaledb.compress_orderby = 'time DESC');
 ALTER TABLE api_logs SET (timescaledb.compress, timescaledb.compress_orderby = 'time DESC');
 
-SELECT add_compression_policy('sentiment_data', INTERVAL '30 days', if_not_exists => TRUE);
-SELECT add_compression_policy('price_data', INTERVAL '30 days', if_not_exists => TRUE);
-SELECT add_compression_policy('technical_indicators', INTERVAL '30 days', if_not_exists => TRUE);
-SELECT add_compression_policy('predictions', INTERVAL '30 days', if_not_exists => TRUE);
-SELECT add_compression_policy('anomalies', INTERVAL '30 days', if_not_exists => TRUE);
-SELECT add_compression_policy('api_logs', INTERVAL '30 days', if_not_exists => TRUE);
+SELECT add_compression_policy('sentiment_data', INTERVAL '30 days');
+SELECT add_compression_policy('price_data', INTERVAL '30 days');
+SELECT add_compression_policy('technical_indicators', INTERVAL '30 days');
+SELECT add_compression_policy('predictions', INTERVAL '30 days');
+SELECT add_compression_policy('anomalies', INTERVAL '30 days');
+SELECT add_compression_policy('api_logs', INTERVAL '30 days');
 
 -- 6. Retention Policies (Automatic raw data drop after 2 years)
-SELECT add_retention_policy('sentiment_data', INTERVAL '2 years', if_not_exists => TRUE);
-SELECT add_retention_policy('price_data', INTERVAL '2 years', if_not_exists => TRUE);
-SELECT add_retention_policy('technical_indicators', INTERVAL '2 years', if_not_exists => TRUE);
-SELECT add_retention_policy('predictions', INTERVAL '2 years', if_not_exists => TRUE);
-SELECT add_retention_policy('anomalies', INTERVAL '2 years', if_not_exists => TRUE);
-SELECT add_retention_policy('api_logs', INTERVAL '2 years', if_not_exists => TRUE);
+SELECT add_retention_policy('sentiment_data', INTERVAL '2 years');
+SELECT add_retention_policy('price_data', INTERVAL '2 years');
+SELECT add_retention_policy('technical_indicators', INTERVAL '2 years');
+SELECT add_retention_policy('predictions', INTERVAL '2 years');
+SELECT add_retention_policy('anomalies', INTERVAL '2 years');
+SELECT add_retention_policy('api_logs', INTERVAL '2 years');

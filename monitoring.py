@@ -716,3 +716,34 @@ def check_flower_status(flower_url: str = "http://localhost:5555") -> dict:
     except Exception:
         pass
     return {"status": "offline", "url": flower_url, "workers_count": 0}
+
+
+# ============================================================================
+# PROMETHEUS METRICS INTEGRATION
+# ============================================================================
+
+try:
+    from prometheus_client import Counter, Histogram, Gauge
+    
+    PREDICTIONS_TOTAL = Counter('moodmarket_predictions_total', 'Total predictions', ['ticker', 'direction'])
+    PREDICTION_LATENCY = Histogram('moodmarket_prediction_latency_seconds', 'Prediction latency')
+    ACTIVE_WS_CONNECTIONS = Gauge('moodmarket_websocket_connections', 'Active WebSocket connections')
+    ANOMALY_ALERTS = Counter('moodmarket_anomaly_alerts_total', 'Anomaly alerts fired', ['ticker', 'level'])
+    CACHE_HIT_RATE = Gauge('moodmarket_cache_hit_rate', 'Redis cache hit rate')
+    SENTIMENT_DRIFT = Gauge('moodmarket_sentiment_drift_score', 'Current drift magnitude')
+except ImportError:
+    # Fallback mock class in case prometheus-client is missing
+    class MockMetric:
+        def __init__(self, *args, **kwargs): pass
+        def labels(self, *args, **kwargs): return self
+        def inc(self, *args, **kwargs): pass
+        def set(self, *args, **kwargs): pass
+        def observe(self, *args, **kwargs): pass
+        
+    PREDICTIONS_TOTAL = MockMetric()
+    PREDICTION_LATENCY = MockMetric()
+    ACTIVE_WS_CONNECTIONS = MockMetric()
+    ANOMALY_ALERTS = MockMetric()
+    CACHE_HIT_RATE = MockMetric()
+    SENTIMENT_DRIFT = MockMetric()
+
