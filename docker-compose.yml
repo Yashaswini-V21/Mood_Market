@@ -173,6 +173,28 @@ services:
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
     restart: always
 
+  # Prometheus (Metrics Aggregation)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: moodmarket_prometheus
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: always
+
+  # Grafana (Metrics Dashboard)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: moodmarket_grafana
+    volumes:
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always
+
 volumes:
   postgres_data:
   redis_data:

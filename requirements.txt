@@ -33,11 +33,10 @@ sentencepiece==0.1.99
 
 # Explainability
 shap==0.44.1
-lime==0.2.135
+lime>=0.2.0.1
 
 # Async support
 aiohttp==3.9.1
-asyncio-contextmanager==1.0.0
 
 # Data collection APIs
 praw==7.7.0
@@ -48,6 +47,7 @@ yfinance==0.2.37
 # Database & caching
 sqlalchemy==2.0.25
 psycopg2-binary==2.9.9
+asyncpg==0.29.0
 redis==5.0.1
 aiosqlite==0.20.0
 
@@ -69,3 +69,11 @@ websockets==12.0
 tqdm==4.67.1
 python-dateutil==2.8.2
 pytz==2024.1
+
+# Monitoring
+prometheus-fastapi-instrumentator>=6.0.0
+prometheus-client>=0.20.0
+
+# Testing extras
+pytest-asyncio>=0.23.0
+httpx>=0.27.0

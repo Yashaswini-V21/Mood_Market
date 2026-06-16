@@ -4,7 +4,7 @@ import logging
 import logging.handlers
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from utils.request_context import get_request_id, get_user_id
 
 
@@ -23,7 +23,7 @@ class JSONFormatter(logging.Formatter):
         usr_id = get_user_id()
 
         log_data = {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "level": record.levelname,
             "logger_name": record.name,
             "message": self.sanitize(record.getMessage()),

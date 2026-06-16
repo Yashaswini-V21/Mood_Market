@@ -1,0 +1,29 @@
+[run]
+source = .
+omit =
+    */tests/*
+    */frontend/*
+    */__pycache__/*
+    */htmlcov/*
+    */dist/*
+    */venv/*
+    */.venv/*
+    setup.py
+    conftest.py
+    train.py
+    benchmark.py
+    visualization.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    raise AssertionError
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    @abstractmethod
+
+[html]
+directory = htmlcov

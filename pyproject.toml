@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moodmarket"
+version = "1.0.0"
+description = "High-frequency financial sentiment and price direction forecasting multi-agent network"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Mood Market Developers", email = "dev@moodmarket.dev" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+    "torch>=2.2.2",
+    "transformers>=4.38.2",
+    "fastapi>=0.109.1",
+    "uvicorn>=0.27.0",
+    "pydantic>=2.5.2",
+    "pydantic-settings>=2.1.0",
+    "redis>=5.0.1",
+    "sqlalchemy>=2.0.25",
+    "psycopg2-binary>=2.9.9",
+    "pandas>=2.1.4",
+    "numpy>=1.24.3",
+    "scikit-learn>=1.4.2",
+    "shap>=0.44.1",
+    "prometheus-fastapi-instrumentator>=8.0.0",
+    "prometheus-client>=0.24.1",
+]
+
+[tool.black]
+line-length = 120
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 120
+multi_line_output = 3
+
+[tool.mypy]
+ignore_missing_imports = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+select = ["E", "F", "B", "W", "I"]
+ignore = ["E501"] # line too long (black handles this)
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-q --tb=short"
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"

@@ -1,0 +1,118 @@
+name: Performance & Lighthouse CI
+
+on:
+  push:
+    branches: [ main, completed ]
+  pull_request:
+    branches: [ main, completed ]
+
+jobs:
+  # ──────────────────────────────────────────────────────────────────────────
+  # Lighthouse CI — Core Web Vitals on Production Build
+  # ──────────────────────────────────────────────────────────────────────────
+  lighthouse:
+    name: Lighthouse CI (Core Web Vitals)
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install dependencies
+      run: cd frontend && npm ci
+
+    - name: Build production bundle
+      run: cd frontend && npm run build
+      env:
+        NODE_ENV: production
+
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli@0.14.x
+
+    - name: Serve production build and run Lighthouse
+      run: |
+        cd frontend
+        # Start static server in background
+        npx serve -s dist -p 3000 &
+        SERVER_PID=$!
+        sleep 3
+
+        # Run Lighthouse against the served app
+        lhci autorun \
+          --collect.url="http://localhost:3000" \
+          --collect.url="http://localhost:3000/#dashboard" \
+          --collect.numberOfRuns=1 \
+          --assert.preset=lighthouse:no-pwa \
+          --assert.assertions.categories:performance=["warn",{"minScore":0.7}] \
+          --assert.assertions.categories:accessibility=["warn",{"minScore":0.8}] \
+          --assert.assertions.categories:best-practices=["warn",{"minScore":0.8}] \
+          --assert.assertions.categories:seo=["warn",{"minScore":0.7}] \
+          --upload.target=temporary-public-storage \
+          --output=json \
+          --outputPath=./lighthouse-results.json \
+          || true
+
+        kill $SERVER_PID || true
+      continue-on-error: true
+
+    - name: Upload Lighthouse results
+      uses: actions/upload-artifact@v4
+      with:
+        name: lighthouse-results
+        path: frontend/lighthouse-results.json
+      if: always()
+
+    - name: Post Lighthouse comment (PR only)
+      if: github.event_name == 'pull_request'
+      uses: treosh/lighthouse-ci-action@v11
+      with:
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+        configPath: './.lighthouserc.json'
+      continue-on-error: true
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Bundle Analysis — Check build size stays manageable
+  # ──────────────────────────────────────────────────────────────────────────
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install dependencies
+      run: cd frontend && npm ci
+
+    - name: Build and analyze bundle
+      run: |
+        cd frontend
+        npm run build 2>&1
+        echo "=== Bundle Size Report ===" 
+        du -sh dist/
+        echo "--- JS chunks ---"
+        find dist/assets -name "*.js" -exec du -sh {} \; | sort -rh | head -20
+        echo "--- CSS ---"
+        find dist/assets -name "*.css" -exec du -sh {} \; | sort -rh
+
+    - name: Upload dist artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-bundle
+        path: frontend/dist/
+        retention-days: 7

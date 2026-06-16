@@ -19,21 +19,11 @@ manager = ChannelManager()
 broadcaster = RealTimeBroadcaster(manager)
 
 
-@router.on_event("startup")
-async def startup_event():
-    """FastAPI callback starting ping keep-alives and database update loops."""
-    # Run ping loop in background
-    asyncio.create_task(manager.start_heartbeat_loop(30.0))
-    # Start scheduled broadcaster tasks
-    broadcaster.start()
-    logger.info("WebSocket routing and broadcaster background loops initialized.")
-
-
-@router.on_event("shutdown")
-async def shutdown_event():
-    """FastAPI callback cleanups on server shutdown."""
-    broadcaster.stop()
-    logger.info("WebSocket broadcaster background loops shut down.")
+# NOTE: Startup/shutdown hooks are handled via the lifespan context manager
+# in main.py (FastAPI >= 0.109 best practice). The broadcaster and heartbeat
+# loops are initialized from there. If running standalone, call:
+#   asyncio.create_task(manager.start_heartbeat_loop(30.0))
+#   broadcaster.start()
 
 
 async def get_user_tickers(user_id: str) -> List[str]:

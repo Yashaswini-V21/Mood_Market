@@ -1,3 +1,4 @@
+ 
 export type ConnectionState = 'connecting' | 'connected' | 'reconnecting' | 'disconnected';
 
 export interface WSMessageListeners {
@@ -217,3 +218,4 @@ export class MoodMarketWSClient {
     this.reconnectTimers.clear();
   }
 }
+

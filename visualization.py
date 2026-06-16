@@ -622,6 +622,49 @@ class AttentionVisualizer:
     """Generates gorgeous plots for Informer self-attention weight analysis."""
     
     @staticmethod
+    def attention_rollout(attention_weights: List[np.ndarray], head_fusion: str = "mean") -> np.ndarray:
+        """
+        Compute attention rollout across all layers.
+        Shows which input timesteps contribute most to the final prediction.
+        
+        Args:
+            attention_weights: List of attention matrices of shape (batch, heads, seq_len, seq_len)
+            head_fusion: "mean" or "max" fusion across heads
+            
+        Returns:
+            Fitted attention rollout matrix of shape (seq_len, seq_len)
+        """
+        if not attention_weights:
+            return np.zeros((1, 1))
+            
+        # Get dimensions based on first layer
+        seq_len = attention_weights[0].shape[-1]
+        result = np.eye(seq_len)
+        
+        for attention in attention_weights:
+            # Squeeze batch dimension if present
+            if len(attention.shape) == 4:
+                attn_layer = attention[0]  # (heads, seq_len, seq_len)
+            else:
+                attn_layer = attention
+                
+            if head_fusion == "mean":
+                attention_heads_fused = attn_layer.mean(axis=0)
+            elif head_fusion == "max":
+                attention_heads_fused = attn_layer.max(axis=0)
+            else:
+                attention_heads_fused = attn_layer[0]
+            
+            # Add identity matrix to represent residual connections
+            I = np.eye(seq_len)
+            a = (attention_heads_fused + I) / 2.0
+            # Re-normalize
+            a = a / (a.sum(axis=-1, keepdims=True) + 1e-9)
+            result = a @ result
+            
+        return result
+
+    @staticmethod
     def plot_attention_heatmap(
         attn_matrix: np.ndarray,
         timestamps: List[str],

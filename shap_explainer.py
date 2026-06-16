@@ -279,6 +279,54 @@ class TransformerExplainer:
         upper = np.percentile(predictions, (1 - alpha) * 100)
         
         return float(lower), float(upper)
+
+    def global_feature_importance(self, texts: List[str]) -> List[Dict[str, Any]]:
+        """
+        Compute global feature importance (token level) across a list of texts.
+        Accumulates mean absolute SHAP values for each unique token.
+        
+        Args:
+            texts: List of input texts to aggregate over.
+            
+        Returns:
+            Ranked list of dictionaries containing token importance metrics.
+        """
+        from collections import defaultdict
+        
+        token_shap_values = defaultdict(list)
+        
+        # Calculate SHAP values for each text
+        for text in texts:
+            try:
+                # Tokenize text
+                tokens = self.tokenizer.tokenize(text)
+                explainer = shap.Explainer(self._predict_fn, [""])
+                shap_values = explainer([text])
+                
+                if hasattr(shap_values, 'values'):
+                    token_values = shap_values.values[0]
+                else:
+                    token_values = shap_values[0]
+                    
+                for token, val in zip(tokens, token_values):
+                    token_shap_values[token].append(float(val))
+            except Exception as e:
+                logger.warning(f"Error extracting global SHAP for text: {e}")
+                
+        # Aggregate
+        importance_list = []
+        for token, values in token_shap_values.items():
+            abs_values = np.abs(values)
+            importance_list.append({
+                "token": token,
+                "mean_abs_shap": float(np.mean(abs_values)),
+                "std_shap": float(np.std(values)),
+                "count": len(values)
+            })
+            
+        # Sort by mean absolute SHAP
+        importance_list.sort(key=lambda x: x["mean_abs_shap"], reverse=True)
+        return importance_list
     
     def batch_explain(
         self,

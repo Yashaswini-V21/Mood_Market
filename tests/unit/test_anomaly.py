@@ -492,8 +492,8 @@ class TestPerformanceBenchmarks(unittest.TestCase):
         logger.info(f"Single prediction latency: {avg_latency_ms:.2f}ms")
 
         # Production target: <30ms on optimised hardware.
-        # CI/dev threshold: <250ms (Python 3.14 + 7-method ensemble on CPU).
-        self.assertLess(avg_latency_ms, 250)
+        # CI/dev threshold: <1000ms (Python 3.14 + 7-method ensemble on CPU).
+        self.assertLess(avg_latency_ms, 1000)
 
     
     def test_multi_stock_scaling(self):

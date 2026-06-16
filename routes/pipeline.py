@@ -11,12 +11,14 @@ from dependencies import get_db, get_redis, get_inference_engine, verify_api_key
 from routes.sentiment import get_latest_sentiment
 from routes.forecast import get_price_forecast
 from agents.risk_manager_agent import RiskManagerAgent
+from decorators import validate_ticker
 
 router = APIRouter()
 logger = logging.getLogger("routes.pipeline")
 
 
 @router.get("/pipeline/{ticker}", response_model=PipelineResponse)
+@validate_ticker
 async def get_pipeline_analysis(
     ticker: str,
     db: AsyncSession = Depends(get_db),
@@ -37,18 +39,19 @@ async def get_pipeline_analysis(
     forecast_data = await get_price_forecast(ticker, confidence_level=0.95, db=db, redis=redis, engine=engine, api_key=api_key)
     
     # 3. Calculate Risk Sizing via RiskManagerAgent logic
-    # Replicate/invoke RiskManager calculation on-demand
-    price = 180.0  # Default baseline price
+    price = 0.0
     try:
-        # We can extract the latest close price from price_records
+        # Extract the latest close price from price_records
         from sqlalchemy import text
         query = text("SELECT close FROM price_records WHERE ticker = :ticker ORDER BY timestamp DESC LIMIT 1")
         result = await db.execute(query, {"ticker": ticker})
         row = result.fetchone()
         if row:
             price = float(row[0])
+        else:
+            logger.warning(f"No price data found for {ticker}; risk calculations may be inaccurate.")
     except Exception:
-        pass
+        logger.warning(f"Failed to fetch latest price for {ticker} from DB.")
         
     # Instantiate RiskManager logic
     risk_config = {"risk_tolerance": 0.02, "max_position_size": 0.05}
