@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: '20'
         cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+        cache-dependency-path: MoodMarket/frontend/package-lock.json
 
     - name: Install dependencies
       run: cd MoodMarket/frontend && npm ci
@@ -66,7 +66,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: lighthouse-results
-        path: frontend/lighthouse-results.json
+        path: MoodMarket/frontend/lighthouse-results.json
       if: always()
 
     - name: Post Lighthouse comment (PR only)
@@ -94,7 +94,7 @@ jobs:
       with:
         node-version: '20'
         cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+        cache-dependency-path: MoodMarket/frontend/package-lock.json
 
     - name: Install dependencies
       run: cd MoodMarket/frontend && npm ci
