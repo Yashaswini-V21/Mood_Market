@@ -254,7 +254,7 @@ Each agent features: **async message queue**, **per-agent LRU cache with TTL**, 
 ```
 Mood_Market/
 │
-├── 🤖 agents/                      # Async multi-agent trading desk
+├── agents/                         # Async multi-agent trading desk
 │   ├── base_agent.py               # Abstract base: caching, timeout, fallback
 │   ├── sentiment_agent.py          # Social signal scorer + attribution
 │   ├── technical_agent.py          # RSI, MACD, Bollinger Bands
@@ -262,14 +262,10 @@ Mood_Market/
 │   ├── risk_manager_agent.py       # Position sizing, stop-loss, take-profit
 │   └── synthesizer_agent.py        # Multi-signal decision aggregator
 │
-├── 🧩 detectors/                   # 7-method anomaly detection suite
-│   ├── base_detector.py            # Abstract base + DetectionResult dataclass
-│   ├── zscore_detector.py          # Statistical baseline (univariate + multivariate)
-│   ├── isolation_forest_detector.py # ML outlier detection
-│   ├── autoencoder_detector.py     # Deep reconstruction error detector
-│   └── ewma_detector.py            # Volatility regime (standard + adaptive EWMA)
+├── detectors/                      # Anomaly detection components
+│   └── base_detector.py            # Base classes for anomaly detectors
 │
-├── 🌐 routes/                      # FastAPI REST + WebSocket endpoints
+├── routes/                         # FastAPI REST + WebSocket endpoints
 │   ├── sentiment.py                # GET /sentiment/{ticker}, POST /sentiment/predict
 │   ├── forecast.py                 # GET /price/forecast/{ticker}
 │   ├── anomaly.py                  # GET /anomaly/{ticker}
@@ -278,85 +274,59 @@ Mood_Market/
 │   ├── watchlist.py                # POST /watchlist user management
 │   └── health.py                   # GET /health · GET /auth/token
 │
-├── 📡 sources/                     # Data ingestion adapters
-│   ├── reddit_source.py            # Reddit API / Pushshift scraper
+├── sources/                        # Data ingestion adapters
+│   ├── reddit_source.py            # Reddit API scraper
 │   ├── news_source.py              # NewsAPI financial article fetcher
 │   ├── price_source.py             # Yahoo Finance OHLCV data
 │   └── trends_source.py            # Google Trends interest scores
 │
-├── ⚙️  processors/                 # Data pipeline middleware
+├── processors/                     # Data pipeline middleware
 │   ├── data_validator.py           # Pydantic schema enforcement
 │   ├── deduplicator.py             # Cryptographic digest deduplication
-│   └── enricher.py                 # Timestamp harmonization + entity linking
+│   └── enricher.py                 # Harmonization + entity linking
 │
-├── ⚙️  celery/                     # Background task pipeline
-│   └── tasks/                      # 4 priority queues
-│       ├── ingestion_tasks.py      # Reddit, Twitter, news scrapers
-│       ├── analysis_tasks.py       # Sentiment + anomaly workers
-│       ├── prediction_tasks.py     # Informer inference queue
-│       ├── news_tasks.py           # News ingestion + categorization
-│       ├── price_tasks.py          # Price feed workers
-│       └── maintenance_tasks.py    # Cleanup, compression, health checks
+├── tests/                          # 200+ test suite across 22 files
+│   ├── unit/                       # Unit testing suite
+│   ├── integration/                # Integration testing suite
+│   └── e2e/                        # End-to-end performance & journey tests
 │
-├── 🧪 tests/                       # 200+ test suite across 22 files
-│   ├── unit/ (15 files)            # model, agents, cache, sentiment, SHAP,
-│   │                               # anomaly, attention, training, evaluation,
-│   │                               # error_handling, broadcaster, data_loader,
-│   │                               # decorators, processors, sources
-│   ├── integration/ (5 files)      # API routes, database, ingestion, data pipeline, websocket
-│   └── e2e/ (2 files)              # Performance benchmarks, user journey
-│
-├── 📱 frontend/                    # React 19 + TypeScript + Tailwind + Vite
+├── frontend/                       # React 19 + TypeScript + Vite stack
 │   └── src/
 │       ├── pages/LandingPage.tsx   # Animated marketing landing page
 │       ├── pages/Dashboard.tsx     # Main trading intelligence dashboard
 │       ├── pages/ComparePage.tsx   # Multi-ticker radar comparison
 │       ├── pages/PortfolioPage.tsx # Portfolio performance & risk analytics
-│       ├── components/             # SentimentCard, ForecastCard, AIChatPanel,
-│       │                           # NotificationCenter, ExplainabilityDashboard
-│       ├── context/                # RealtimeContext (WS + HTTP fallback)
-│       │                           # ToastContext (notification system)
-│       ├── hooks/                  # useWebSocket, useTheme, useMediaQuery
-│       └── utils/                  # websocket-client, signal-generator
+│       ├── components/             # Custom reactive UI components
+│       ├── context/                # Contexts (Toast, Realtime)
+│       └── utils/                  # WS client, signals generator
 │
-├── 📖 docs/                        # Full technical documentation
-│   ├── ARCHITECTURE.md             # C4 diagrams, data flow, ADLs, sequence charts
-│   ├── API_EXAMPLES.md             # curl examples with full response schemas
-│   └── DEPLOYMENT.md               # K8s manifests, Terraform, Nginx, SSL setup
+├── docker/                         # Docker configuration templates
+│   ├── prometheus/                 # Prometheus config
+│   └── grafana/dashboards/         # Grafana dashboard definitions
 │
-├── 📊 benchmarks/                  # Performance benchmark suite
-│   ├── locustfile.py               # Locust load test (1000+ RPS target)
-│   └── RESULTS.md                  # Benchmark results vs LSTM/Transformer
+├── .github/workflows/              # GitHub Actions CI/CD workflows
+│   ├── test.yml                    # Test & linting CI pipeline
+│   ├── build.yml                   # Docker build & push (main branch)
+│   └── security.yml                # Trivy, npm & pip vulnerability scans
 │
-├── 🎬 demo/                        # Hackathon demo server
-│   ├── demo_server.py              # Standalone mock API for offline demos
-│   └── README.md                   # Demo instructions
-│
-├── 🐳 docker/                      # Container orchestration
-│   ├── docker-compose.yml          # 9-service full stack
-│   ├── prometheus/prometheus.yml   # Metrics scrape config
-│   └── grafana/dashboards/         # Pre-built monitoring dashboard
-│
-├── .github/workflows/              # GitHub Actions CI/CD
-│   ├── test.yml                    # Lint + typecheck + 200 tests + coverage
-│   ├── build.yml                   # Docker build + GHCR push on main
-│   └── deploy.yml                  # SSH deploy on version tag push
-│
-├── model.py                        # Informer ProbSparse Attention (643 lines)
-├── trainer.py                      # FP16 training + Optuna hyperparameter tuning
-├── inference.py                    # Real-time prediction engine + streaming
-├── anomaly_detector.py             # 7-method ensemble orchestrator
+├── main.py                         # App entrypoint & router initialization
+├── model.py                        # Informer deep learning forecaster
+├── trainer.py                      # FP16 training with Optuna
+├── inference.py                    # Real-time prediction engine
+├── anomaly_detector.py             # 7-method anomaly ensemble orchestrator
 ├── sentiment_ensemble.py           # FinBERT + DistilBERT fusion pipeline
-├── shap_explainer.py               # Deep SHAP + global importance
-├── calibration.py                  # Temperature scaling + ECE computation
-├── visualization.py                # Attention heatmaps + SHAP plots + rollout
-├── monitoring.py                   # Performance tracking + drift detection
-├── cache_manager.py                # Multi-layer Redis cache manager
-├── websocket_server.py             # JWT-authenticated live data broadcaster
-├── middleware.py                   # Request tracing + Redis rate limiting
-├── authenticator.py                # JWT generation, validation, refresh
-├── orchestrator.py                 # Multi-agent pipeline coordinator
-└── benchmark.py                    # Informer vs LSTM vs Transformer comparison
+├── shap_explainer.py               # Deep SHAP attribution engine
+├── calibration.py                  # Temperature scaling calibration (ECE)
+├── visualization.py                # Attention rollouts, heatmaps & SHAP plots
+├── monitoring.py                   # Model performance & drift detection
+├── cache.py                        # Redis caching layer
+├── websocket_server.py             # WebSockets server implementation
+├── broadcaster.py                  # Live WebSocket message broadcaster
+├── channel_manager.py              # WebSocket channel subscription manager
+├── middleware.py                   # Request tracing & Redis rate limiter
+├── authenticator.py                # JWT authentication & security layer
+├── orchestrator.py                 # Multi-agent coordination pipeline
+└── celery_app.py                   # Celery worker & task configuration
 ```
 
 ---
