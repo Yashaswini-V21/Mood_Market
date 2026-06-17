@@ -30,6 +30,6 @@ jobs:
         git pull origin main
         
         # Pull latest images and restart the stack using the production docker-compose
-        docker compose -f docker-compose.prod.yml pull
-        docker compose -f docker-compose.prod.yml up -d --remove-orphans
+        docker compose -f MoodMarket/backend/docker-compose.prod.yml pull
+        docker compose -f MoodMarket/backend/docker-compose.prod.yml up -d --remove-orphans
         EOF
