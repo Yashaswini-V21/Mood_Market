@@ -93,5 +93,3 @@ class AnomalyModel(BaseModel):
     @classmethod
     def validate_ticker(cls, v):
         return v.upper().strip()
-
-# clean architecture alignment

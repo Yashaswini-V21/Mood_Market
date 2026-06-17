@@ -27,5 +27,3 @@ def clear_context():
     """Resets tracking variables to None."""
     request_id_var.set(None)
     user_id_var.set(None)
-
-# clean architecture alignment

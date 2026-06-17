@@ -747,5 +747,3 @@ except ImportError:
     CACHE_HIT_RATE = MockMetric()
     SENTIMENT_DRIFT = MockMetric()
 
-
-# clean architecture alignment

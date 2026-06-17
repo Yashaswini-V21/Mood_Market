@@ -132,5 +132,3 @@ def fetch_google_trends_task():
                 
     logger.info(f"Google Trends fetch task completed. Processed {total_trends} interest points.")
     return {"status": "success", "trends_processed": total_trends}
-
-# clean architecture alignment

@@ -197,5 +197,3 @@ def fetch_reddit_posts_task():
                 
     logger.info(f"Reddit fetch task completed. Processed {total_new_posts} new posts.")
     return {"status": "success", "new_posts_processed": total_new_posts}
-
-# clean architecture alignment

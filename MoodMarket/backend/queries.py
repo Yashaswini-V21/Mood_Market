@@ -242,5 +242,3 @@ async def query_anomalies_by_type(
         }
         for r in rows
     ]
-
-# clean architecture alignment

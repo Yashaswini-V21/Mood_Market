@@ -235,5 +235,3 @@ class ForecasterAgent(BaseAgent):
             "uncertainty": 0.1,
             "error_fallback": str(error)
         }
-
-# clean architecture alignment

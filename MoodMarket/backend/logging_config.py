@@ -95,5 +95,3 @@ def setup_logging():
         logger = logging.getLogger(logger_name)
         logger.setLevel(logging.INFO)
         logger.propagate = True
-
-# clean architecture alignment

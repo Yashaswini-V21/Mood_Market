@@ -563,5 +563,3 @@ if __name__ == "__main__":
         logger.info(f"\nVisualization: {json.dumps(viz, indent=2)}")
     else:
         logger.error("SHAP not available")
-
-# clean architecture alignment

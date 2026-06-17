@@ -1,5 +1,5 @@
 # c:\Mood_Market\exceptions.py
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 import logging
@@ -88,7 +88,7 @@ def register_exception_handlers(app):
                 "error": {
                     "code": exc.code,
                     "message": exc.message,
-                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                     "request_id": req_id
                 }
             }
@@ -108,10 +108,8 @@ def register_exception_handlers(app):
                 "error": {
                     "code": "INTERNAL_SERVER_ERROR",
                     "message": "Internal server error. Please contact support.",
-                    "timestamp": datetime.utcnow().isoformat() + "Z",
+                    "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                     "request_id": req_id
                 }
             }
         )
-
-# clean architecture alignment

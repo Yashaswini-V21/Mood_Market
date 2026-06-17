@@ -598,5 +598,3 @@ def run_tests():
 if __name__ == "__main__":
     success = run_tests()
     exit(0 if success else 1)
-
-# clean architecture alignment

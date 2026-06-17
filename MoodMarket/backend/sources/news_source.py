@@ -101,5 +101,3 @@ class NewsSourceClient:
                 "ticker": ticker
             })
         return articles
-
-# clean architecture alignment

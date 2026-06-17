@@ -244,5 +244,3 @@ class Trainer:
             "val_accuracies": self.val_accuracies,
             "best_val_acc": self.best_val_acc
         }
-
-# clean architecture alignment

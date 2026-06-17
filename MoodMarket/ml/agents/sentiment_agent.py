@@ -206,5 +206,3 @@ class SentimentAgent(BaseAgent):
             "social_momentum": "NEUTRAL",
             "error_fallback": str(error)
         }
-
-# clean architecture alignment

@@ -232,5 +232,3 @@ async def fallback_sentiment(ticker: str):
         "confidence": 0.82,
         "updated_at": asyncio.get_event_loop().time()
     }
-
-# clean architecture alignment

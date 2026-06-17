@@ -122,5 +122,3 @@ class TestAttentionExplainability(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-# clean architecture alignment

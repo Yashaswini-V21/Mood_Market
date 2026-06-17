@@ -202,5 +202,3 @@ class CacheManager:
 
 # Global singleton instance
 cache_manager = CacheManager()
-
-# clean architecture alignment

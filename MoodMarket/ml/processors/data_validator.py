@@ -119,5 +119,3 @@ class DataValidator:
         except Exception as e:
             logger.warning(f"Google Trends validation failed for data {data}: {e}")
             return None
-
-# clean architecture alignment

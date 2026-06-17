@@ -23,5 +23,3 @@ __all__ = [
     "RiskManagerAgent",
     "SynthesizerAgent",
 ]
-
-# clean architecture alignment

@@ -441,5 +441,3 @@ class AnomalyDetector:
                 for ticker in self.total_alerts.keys()
             }
         }
-
-# clean architecture alignment

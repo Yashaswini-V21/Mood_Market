@@ -11,7 +11,6 @@ from agents.forecaster_agent import ForecasterAgent
 from agents.risk_manager_agent import RiskManagerAgent
 from agents.synthesizer_agent import SynthesizerAgent
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("orchestrator")
 
 class AgentOrchestrator:
@@ -160,5 +159,3 @@ class AgentOrchestrator:
         }
         
         return final_payload
-
-# clean architecture alignment

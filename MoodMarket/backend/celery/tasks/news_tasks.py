@@ -168,5 +168,3 @@ def fetch_news_articles_task():
             
     logger.info(f"News fetch task completed. Processed {total_new_articles} new articles.")
     return {"status": "success", "new_articles_processed": total_new_articles}
-
-# clean architecture alignment

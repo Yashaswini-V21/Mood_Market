@@ -63,5 +63,3 @@ def setup_periodic_tasks(app):
             "schedule": crontab(minute="*/5"),  # every 5 minutes
         }
     }
-
-# clean architecture alignment

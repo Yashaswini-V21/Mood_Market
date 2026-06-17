@@ -26,5 +26,3 @@ except Exception as e:
     raise e
 finally:
     sys.path = saved_path
-
-# clean architecture alignment

@@ -174,5 +174,3 @@ async def get_prediction_explanation(
         "attention_weights": attention_weights,
         "interpretation": interpretation,
     }
-
-# clean architecture alignment

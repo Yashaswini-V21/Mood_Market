@@ -134,5 +134,3 @@ async def verify_api_key(
             detail="Invalid API key credentials provided.",
         )
     return credentials.credentials
-
-# clean architecture alignment

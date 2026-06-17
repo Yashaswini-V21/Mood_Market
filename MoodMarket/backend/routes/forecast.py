@@ -98,5 +98,3 @@ async def get_price_forecast(
     except Exception as e:
         logger.error(f"Failed to query price forecast for {ticker}: {e}")
         raise DatabaseException(f"Failed to query price forecast: {str(e)}")
-
-# clean architecture alignment

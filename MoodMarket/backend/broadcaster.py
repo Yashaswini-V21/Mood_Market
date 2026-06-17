@@ -152,5 +152,3 @@ class RealTimeBroadcaster:
                 }
                 
                 await self.manager.broadcast(f"prediction:{ticker}", payload)
-
-# clean architecture alignment

@@ -260,5 +260,3 @@ class TechnicalAgent(BaseAgent):
             },
             "error_fallback": str(error)
         }
-
-# clean architecture alignment

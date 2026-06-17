@@ -72,5 +72,3 @@ def validate_ticker(func: Callable[..., Any]):
                 )
         return await func(*args, **kwargs)
     return wrapper
-
-# clean architecture alignment

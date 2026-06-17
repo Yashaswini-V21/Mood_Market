@@ -429,5 +429,3 @@ def fetch_google_trends_task(self):
         countdown = 5 ** (self.request.retries + 1)
         logger.error(f"Error in fetch_google_trends_task. Retrying in {countdown}s: {exc}")
         raise self.retry(exc=exc, countdown=countdown)
-
-# clean architecture alignment

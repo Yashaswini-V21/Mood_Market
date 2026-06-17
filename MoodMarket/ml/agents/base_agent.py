@@ -165,5 +165,3 @@ class BaseAgent(abc.ABC):
                 self.logger.critical(f"Critical error in Agent {self.name} loop: {str(e)}", exc_info=True)
                 # Ensure we don't block the queue indefinitely if something fails globally
                 self.incoming_queue.task_done()
-
-# clean architecture alignment

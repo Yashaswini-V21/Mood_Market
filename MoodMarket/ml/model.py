@@ -640,5 +640,3 @@ class HuberLoss(nn.Module):
         loss = torch.where(is_small_error, small_error_loss, large_error_loss)
         
         return loss.mean()
-
-# clean architecture alignment

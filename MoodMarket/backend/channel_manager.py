@@ -140,5 +140,3 @@ class ChannelManager:
                     if not connections:
                         self.active_connections.pop(channel, None)
                         self.last_message_hashes.pop(channel, None)
-
-# clean architecture alignment

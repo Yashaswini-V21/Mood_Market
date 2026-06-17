@@ -1,4 +1,5 @@
 import logging
+import time
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -13,10 +14,13 @@ from logging_config import setup_logging
 setup_logging()
 logger = logging.getLogger("main")
 
+_startup_time: float = 0.0
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifecycle events managing connections on application startup and shutdown."""
+    global _startup_time
+    _startup_time = time.time()
     logger.info("Initializing MoodMarket API server...")
     
     # 1. Warm-up: preload ML Informer model
@@ -112,14 +116,44 @@ async def lifespan(app: FastAPI):
         logger.error(f"Database cleanup failure: {e}")
 
 
-# Initialize FastAPI with metadata for Swagger UI autogeneration
+# ── App version / build metadata ────────────────────────────────────────────
+APP_VERSION = "1.0.0"
+APP_DESCRIPTION = """
+## MoodMarket Forecasting API
+
+High-frequency, multi-agent AI platform that fuses real-time social sentiment
+with an **Informer Transformer** (ProbSparse O(L log L) attention) to forecast
+stock price direction and detect coordinated hype events.
+
+### Key capabilities
+- `/api/v1/sentiment/{ticker}` — FinBERT + DistilBERT ensemble score
+- `/api/v1/price/forecast/{ticker}` — 4-hour direction + uncertainty
+- `/api/v1/anomaly/{ticker}` — 7-method HypeStorm Radar™
+- `/api/v1/pipeline/{ticker}` — Full 5-agent trading desk bundle
+- `/api/v1/explain/{id}` — SHAP + Attention Rollout attribution
+- `WS /ws/*` — JWT-authenticated live streams
+
+> **Note:** All endpoints require a valid JWT. Obtain one via `POST /auth/token`.
+"""
+
+# Initialize FastAPI with rich Swagger UI metadata
 app = FastAPI(
-    title="MoodMarket Forecasting API Platform",
-    description="High-frequency financial sentiment and price direction forecasting multi-agent network.",
-    version="1.0.0",
+    title="MoodMarket API",
+    description=APP_DESCRIPTION,
+    version=APP_VERSION,
     lifespan=lifespan,
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    openapi_tags=[
+        {"name": "Health", "description": "System health and status checks"},
+        {"name": "Sentiment", "description": "FinBERT + DistilBERT sentiment analysis"},
+        {"name": "Forecasting", "description": "Informer Transformer 4-hour price direction"},
+        {"name": "Anomaly", "description": "7-method HypeStorm Radar anomaly detection"},
+        {"name": "Pipeline", "description": "Full 5-agent trading desk end-to-end"},
+        {"name": "Explainability", "description": "SHAP values and attention rollout weights"},
+        {"name": "Watchlist", "description": "User ticker watchlist management"},
+        {"name": "WebSockets", "description": "JWT-authenticated real-time data streams"},
+    ],
 )
 
 # 1. Setup CORS Middleware
@@ -181,11 +215,25 @@ if _os.environ.get("ENVIRONMENT") != "test" and _os.environ.get("ENV") != "test"
         logger.warning(f"Failed to initialize Prometheus metrics instrumentator: {e}")
 
 
-@app.get("/")
+@app.get("/", tags=["Health"])
 async def root():
+    """Root endpoint — returns API version, uptime, and navigation links."""
+    import sys
+    uptime_s = round(time.time() - _startup_time, 1) if _startup_time else 0
     return {
-        "success": True,
-        "message": "Welcome to MoodMarket API. Please navigate to /docs for the OpenAPI specification."
+        "name": "MoodMarket API",
+        "version": APP_VERSION,
+        "status": "running",
+        "environment": api_settings.env,
+        "python": sys.version.split()[0],
+        "uptime_seconds": uptime_s,
+        "links": {
+            "docs": "/docs",
+            "redoc": "/redoc",
+            "health": "/api/v1/health",
+            "metrics": "/metrics",
+            "auth": "/auth/token",
+        },
     }
 
 
@@ -196,5 +244,3 @@ if __name__ == "__main__":
         port=8000,
         reload=(api_settings.env == "development")
     )
-
-# clean architecture alignment

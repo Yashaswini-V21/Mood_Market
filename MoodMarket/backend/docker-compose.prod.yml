@@ -221,5 +221,3 @@ volumes:
 networks:
   default:
     name: moodmarket-network-prod
-
-# clean architecture alignment

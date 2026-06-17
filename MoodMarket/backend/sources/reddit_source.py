@@ -78,5 +78,3 @@ class RedditSourceClient:
                 "timestamp": datetime.utcnow().isoformat()
             })
         return posts
-
-# clean architecture alignment

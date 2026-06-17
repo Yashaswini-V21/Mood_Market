@@ -102,5 +102,3 @@ class Backtester:
             "equity_curve": equity_curve.tolist(),
             "strategy_returns": strategy_returns.tolist()
         }
-
-# clean architecture alignment

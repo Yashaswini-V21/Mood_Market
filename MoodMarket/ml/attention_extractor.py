@@ -106,5 +106,3 @@ class AttentionExtractor:
             importance = importance / total
             
         return importance
-
-# clean architecture alignment

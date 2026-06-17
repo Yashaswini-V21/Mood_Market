@@ -42,5 +42,3 @@ sources:
     fetch_interval_minutes: 60
     resolution: hourly
     error_threshold_failures: 2
-
-# clean architecture alignment

@@ -22,5 +22,3 @@ __all__ = [
     "Deduplicator",
     "TechnicalIndicatorEnricher",
 ]
-
-# clean architecture alignment

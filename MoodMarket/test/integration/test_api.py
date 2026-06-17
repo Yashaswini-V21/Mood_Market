@@ -41,5 +41,3 @@ def test_pipeline_endpoint(client: TestClient):
     assert "risk" in data
     assert "timestamp" in data
 
-
-# clean architecture alignment

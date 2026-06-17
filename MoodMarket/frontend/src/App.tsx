@@ -21,6 +21,13 @@ const getRouteFromHash = (): Route => {
   return 'landing';
 };
 
+const ROUTE_TITLES: Record<Route, string> = {
+  landing:   'MoodMarket — AI Financial Intelligence Platform',
+  dashboard: 'MoodMarket — Live Intelligence Dashboard',
+  compare:   'MoodMarket — Multi-Ticker Comparison',
+  portfolio: 'MoodMarket — Portfolio Analytics',
+};
+
 function App() {
   const [route, setRoute] = useState<Route>(getRouteFromHash);
 
@@ -29,6 +36,11 @@ function App() {
     window.addEventListener('hashchange', handler);
     return () => window.removeEventListener('hashchange', handler);
   }, []);
+
+  // Update page title on every route change
+  useEffect(() => {
+    document.title = ROUTE_TITLES[route];
+  }, [route]);
 
   const navigate = (r: Route) => {
     window.location.hash = r === 'landing' ? '' : r;
@@ -39,11 +51,11 @@ function App() {
     case 'landing':
       return <LandingPage onLaunch={() => navigate('dashboard')} />;
     case 'dashboard':
-      return <Dashboard />;
+      return <div key="dashboard" className="page-enter"><Dashboard /></div>;
     case 'compare':
-      return <ComparePage />;
+      return <div key="compare" className="page-enter"><ComparePage /></div>;
     case 'portfolio':
-      return <PortfolioPage />;
+      return <div key="portfolio" className="page-enter"><PortfolioPage /></div>;
     default:
       return <LandingPage onLaunch={() => navigate('dashboard')} />;
   }

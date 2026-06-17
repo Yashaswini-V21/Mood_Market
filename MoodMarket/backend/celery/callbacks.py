@@ -35,5 +35,3 @@ def on_task_failure(task_id, exception, args, kwargs, traceback, einfo, **extra_
         f"Arguments: {args} | Kwargs: {kwargs}\n"
         f"Traceback: {traceback}"
     )
-
-# clean architecture alignment

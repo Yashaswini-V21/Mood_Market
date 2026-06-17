@@ -370,5 +370,3 @@ class APISettings(BaseSettings):
 
 api_settings = APISettings()
 
-
-# clean architecture alignment

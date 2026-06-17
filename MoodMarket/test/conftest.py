@@ -161,5 +161,3 @@ def client(mock_redis) -> Generator[TestClient, None, None]:
     app.dependency_overrides.clear()
 
 
-
-# clean architecture alignment

@@ -74,5 +74,3 @@ class PriceSourceClient:
                 "volume": float(v)
             })
         return candles
-
-# clean architecture alignment

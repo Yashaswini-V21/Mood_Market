@@ -152,5 +152,3 @@ def warm_cache_on_startup():
     except RuntimeError:
         # No running loop, execute synchronously via asyncio.run
         asyncio.run(warm_cache())
-
-# clean architecture alignment

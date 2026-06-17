@@ -67,5 +67,3 @@ import celery.callbacks
 
 if __name__ == "__main__":
     app.start()
-
-# clean architecture alignment

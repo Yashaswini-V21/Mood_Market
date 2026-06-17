@@ -49,5 +49,3 @@ synthesizer_agent:
     sentiment: 0.3
     technical: 0.3
     forecasting: 0.4
-
-# clean architecture alignment

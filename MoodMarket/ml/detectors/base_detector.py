@@ -235,5 +235,3 @@ class TimeSeriesDetector(BaseDetector):
         if len(self.history) > self.window_size * 96:  # 96 = 15-min windows per day
             self.history.pop(0)
         self.update(value)
-
-# clean architecture alignment

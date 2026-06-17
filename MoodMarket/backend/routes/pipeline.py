@@ -83,5 +83,3 @@ async def get_pipeline_analysis(
         },
         "timestamp": datetime.utcnow().isoformat()
     }
-
-# clean architecture alignment

@@ -33,13 +33,15 @@ export function Dashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [showExplainability, setShowExplainability] = useState(false);
   const [stats, setStats] = useState(DEFAULT_STATS);
+  // Drives stat-flash animation — incremented each time ticker changes
+  const [statKey, setStatKey] = useState(0);
   const { toast } = useToast();
   const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   // Update stats when ticker changes
   useEffect(() => {
     const d = TICKER_DATA[ticker];
-    if (d) setStats(d);
+    if (d) { setStats(d); setStatKey(k => k + 1); }
   }, [ticker]);
 
   const handleSelect = (t: string) => {
@@ -57,6 +59,9 @@ export function Dashboard() {
     setShowExplainability(prev => !prev);
   };
 
+  // Navigate using hash-based router
+  const navigateTo = (hash: string) => { window.location.hash = hash; };
+
   const isUp = stats.change >= 0;
 
   return (
@@ -66,7 +71,7 @@ export function Dashboard() {
         {/* Page header */}
         <div className="flex items-center justify-between mb-4">
           <div>
-            <div className="flex items-center gap-2.5 mb-0.5">
+            <div className="flex items-center gap-2 mb-0.5">
               <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
                 LIVE
@@ -91,8 +96,8 @@ export function Dashboard() {
           </Button>
         </div>
 
-        {/* Quick stats banner — fully ticker-reactive */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        {/* Quick stats banner — animated on ticker change */}
+        <div key={statKey} className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
           {/* Price */}
           <div className="glass rounded-xl p-3 flex flex-col gap-0.5 hover:border-slate-600/80 transition-all duration-200 group">
             <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Price</span>
@@ -178,12 +183,20 @@ export function Dashboard() {
           <TrendingUp size={11} />
           MoodMarket — Informer Transformer + FinBERT + 7-Method Ensemble Anomaly Detection + 5-Agent Async Desk.
           <div className="ml-auto flex items-center gap-3">
-            <a href="#compare" id="nav-to-compare" className="flex items-center gap-1 text-slate-600 hover:text-cyan-400 transition-colors text-[11px]">
+            <button
+              id="nav-to-compare"
+              onClick={() => navigateTo('compare')}
+              className="flex items-center gap-1 text-slate-600 hover:text-cyan-400 transition-colors text-[11px] cursor-pointer"
+            >
               <GitCompare size={11} /> Compare
-            </a>
-            <a href="#portfolio" id="nav-to-portfolio" className="flex items-center gap-1 text-slate-600 hover:text-emerald-400 transition-colors text-[11px]">
+            </button>
+            <button
+              id="nav-to-portfolio"
+              onClick={() => navigateTo('portfolio')}
+              className="flex items-center gap-1 text-slate-600 hover:text-emerald-400 transition-colors text-[11px] cursor-pointer"
+            >
               <Portfolio size={11} /> Portfolio
-            </a>
+            </button>
             <span>Not financial advice.</span>
           </div>
         </div>

@@ -23,5 +23,3 @@ __all__ = [
     "PriceSourceClient",
     "GoogleTrendsSourceClient",
 ]
-
-# clean architecture alignment

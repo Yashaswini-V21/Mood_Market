@@ -306,5 +306,3 @@ class MultiVarIsolationForestDetector(BaseDetector):
             "observations": self.n_observations,
             "fitted": self.is_fitted
         }
-
-# clean architecture alignment

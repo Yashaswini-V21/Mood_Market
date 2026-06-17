@@ -2,7 +2,7 @@
 import time
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -88,7 +88,7 @@ class RequestLoggerMiddleware(BaseHTTPMiddleware):
                     "error": {
                         "code": "INTERNAL_SERVER_ERROR",
                         "message": "Internal server error during request execution.",
-                        "timestamp": datetime.utcnow().isoformat() + "Z",
+                        "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                         "request_id": request_id
                     }
                 }
@@ -141,7 +141,7 @@ class RedisRateLimiterMiddleware(BaseHTTPMiddleware):
                         "error": {
                             "code": "TOO_MANY_REQUESTS",
                             "message": "Rate limit exceeded. Maximum 100 requests per minute.",
-                            "timestamp": datetime.utcnow().isoformat() + "Z",
+                            "timestamp": datetime.now(timezone.utc).isoformat() + "Z",
                             "request_id": request.headers.get("X-Request-ID", "unknown")
                         }
                     }
@@ -152,5 +152,3 @@ class RedisRateLimiterMiddleware(BaseHTTPMiddleware):
             await redis.close()
 
         return await call_next(request)
-
-# clean architecture alignment

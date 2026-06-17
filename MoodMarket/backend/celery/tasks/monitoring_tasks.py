@@ -114,5 +114,3 @@ def alert_anomalies_task(self):
         countdown = 5 ** (self.request.retries + 1)
         logger.error(f"Error in alert_anomalies_task. Retrying: {exc}")
         raise self.retry(exc=exc, countdown=countdown)
-
-# clean architecture alignment

@@ -35,5 +35,3 @@ model:
 optuna:
   n_trials: 10                 # Number of hyperparameter trials for Optuna optimization
   timeout_seconds: 600         # 10 minutes limit for fast trial search during testing
-
-# clean architecture alignment

@@ -26,12 +26,28 @@ const POSITIONS: Position[] = [
   { ticker: 'AMZN',  shares: 40,  avgCost: 185.00, currentPrice: 193.77, sector: 'E-Commerce',   color: '#ec4899' },
 ];
 
-// ─── P&L over time ─────────────────────────────────────────────────────────────
+// ─── P&L over time — deterministic seed so chart is stable on HMR ──────────
+function seededRandom(seed: number): () => number {
+  // Simple mulberry32 PRNG — deterministic given the same seed
+  let s = seed;
+  return () => {
+    s |= 0; s = s + 0x6D2B79F5 | 0;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
 const genPLHistory = () => {
+  const rand = seededRandom(42); // fixed seed → same chart every time
   let val = 95000;
   return Array.from({ length: 30 }, (_, i) => {
-    val += (Math.random() - 0.45) * 1200;
-    return { day: `D${i + 1}`, portfolio: +val.toFixed(2), benchmark: +(95000 + i * 80 + (Math.random() - 0.5) * 600).toFixed(2) };
+    val += (rand() - 0.45) * 1200;
+    return {
+      day: `D${i + 1}`,
+      portfolio: +val.toFixed(2),
+      benchmark: +(95000 + i * 80 + (rand() - 0.5) * 600).toFixed(2),
+    };
   });
 };
 

@@ -83,8 +83,7 @@ class WatchlistResponse(BaseModel):
 
 # Health Check Schemas
 class HealthResponse(BaseModel):
-    status: str = Field(..., description="Server status, e.g., 'healthy'")
-    models_loaded: bool = Field(..., description="True if local Informer model is loaded successfully")
-    db_connected: bool = Field(..., description="True if database pool is online")
-
-# clean architecture alignment
+    status: str = Field(..., description="Server status: 'healthy' | 'degraded'")
+    models_loaded: bool = Field(..., description="True if the Informer model checkpoint is loaded")
+    db_connected: bool = Field(..., description="True if the TimescaleDB/SQLite pool is online")
+    redis_connected: bool = Field(..., description="True if the Redis cache is reachable")

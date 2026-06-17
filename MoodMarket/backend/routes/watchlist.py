@@ -85,5 +85,3 @@ async def create_or_manage_watchlist(
     await cache_manager.set_async(cache_key, response_data, ttl=3600)  # 1 hour TTL requested
 
     return response_data
-
-# clean architecture alignment

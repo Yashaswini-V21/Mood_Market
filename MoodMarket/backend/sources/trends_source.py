@@ -75,5 +75,3 @@ class GoogleTrendsSourceClient:
                 "interest": float(val)
             })
         return trends
-
-# clean architecture alignment

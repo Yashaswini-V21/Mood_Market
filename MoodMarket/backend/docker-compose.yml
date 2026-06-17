@@ -1,4 +1,3 @@
-version: '3.9'
 
 services:
   # PostgreSQL TimescaleDB
@@ -202,5 +201,3 @@ volumes:
 networks:
   default:
     name: moodmarket-network
-
-# clean architecture alignment

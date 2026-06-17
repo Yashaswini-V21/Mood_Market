@@ -48,7 +48,8 @@ async def health_check(
     return {
         "status": status,
         "models_loaded": models_loaded,
-        "db_connected": db_connected
+        "db_connected": db_connected,
+        "redis_connected": redis_connected,
     }
 
 
@@ -60,6 +61,3 @@ async def get_auth_token() -> Dict[str, str]:
     from authenticator import JWTAuthenticator
     token = JWTAuthenticator.generate_token("dashboard_user", expires_in_minutes=120)
     return {"token": token}
-
-
-# clean architecture alignment

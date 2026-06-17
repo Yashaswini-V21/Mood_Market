@@ -26,5 +26,3 @@ def test_user_journey_flow(client: TestClient):
     pipeline_data = pipeline_response.json()
     assert "risk" in pipeline_data
 
-
-# clean architecture alignment

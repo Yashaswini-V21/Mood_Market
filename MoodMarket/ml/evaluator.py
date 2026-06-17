@@ -139,5 +139,3 @@ class Evaluator:
             "quantized_latency_ms": quantized_latency,
             "speedup_ratio": float(unquantized_latency / (quantized_latency + 1e-8))
         }
-
-# clean architecture alignment

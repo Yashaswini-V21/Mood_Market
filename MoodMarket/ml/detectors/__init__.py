@@ -20,5 +20,3 @@ __all__ = [
     "EWMADetector",
     "AdaptiveEWMADetector",
 ]
-
-# clean architecture alignment

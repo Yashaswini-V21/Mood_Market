@@ -98,5 +98,3 @@ class RiskManagerAgent(BaseAgent):
             "max_loss": 50.0,
             "error_fallback": str(error)
         }
-
-# clean architecture alignment

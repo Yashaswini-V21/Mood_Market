@@ -138,5 +138,3 @@ async def predict_custom_sentiment(
         "tokens_importance": tokens_importance[:15],  # limit response display size
         "confidence": float(confidence)
     }
-
-# clean architecture alignment

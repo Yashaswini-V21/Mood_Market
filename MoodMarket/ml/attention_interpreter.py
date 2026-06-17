@@ -111,5 +111,3 @@ class AttentionInterpreter:
             "attention_distribution": distribution,
             "top_attended_events": sorted_highlights[:5]
         }
-
-# clean architecture alignment

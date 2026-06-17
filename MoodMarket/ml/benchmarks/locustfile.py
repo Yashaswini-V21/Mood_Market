@@ -50,5 +50,3 @@ def on_test_start(environment, **kwargs):
 @events.test_stop.add_listener
 def on_test_stop(environment, **kwargs):
     print("MoodMarket load test completed.")
-
-# clean architecture alignment

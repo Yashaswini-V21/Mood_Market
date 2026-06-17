@@ -572,5 +572,3 @@ if __name__ == "__main__":
     # Print statistics
     stats = ensemble.get_statistics()
     logger.info(f"\nStatistics: {json.dumps(stats, indent=2)}")
-
-# clean architecture alignment

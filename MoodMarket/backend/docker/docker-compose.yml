@@ -91,5 +91,3 @@ services:
 
 volumes:
   redis_data:
-
-# clean architecture alignment

@@ -72,5 +72,3 @@ class TechnicalIndicatorEnricher:
         })
         
         return df.to_dict(orient='records')
-
-# clean architecture alignment

@@ -317,13 +317,13 @@ export function LandingPage({ onLaunch }: LandingPageProps) {
         className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center"
         style={{ zIndex: 1 }}
       >
-        <div style={{ opacity: heroOpacity, transform: `translateY(${heroTranslate}px)` }}>
+        <div style={{ opacity: heroOpacity, transform: `translateY(${heroTranslate}px)`, willChange: 'transform' }}>
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-purple-500/30
                           bg-purple-500/10 text-purple-300 text-[11px] font-semibold mb-8
                           animate-[fadeIn_0.8s_ease_both]">
             <Star size={11} className="fill-purple-400 text-purple-400" />
-            Hackathon Top-1% Submission · AI Financial Intelligence Platform
+            Future of Productivity · AI Financial Intelligence · Hackathon 2026
           </div>
 
           {/* Headline */}
@@ -525,7 +525,7 @@ export function LandingPage({ onLaunch }: LandingPageProps) {
           <div className="w-6 h-6 rounded-md bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center">
             <TrendingUp size={12} className="text-white" />
           </div>
-          <span className="text-xs text-slate-500 font-semibold">MoodMarket © 2025 · Yashaswini V · MIT License</span>
+          <span className="text-xs text-slate-500 font-semibold">MoodMarket © 2026 · Yashaswini V · MIT License</span>
         </div>
         <div className="text-[10px] text-slate-700">Not financial advice.</div>
       </footer>

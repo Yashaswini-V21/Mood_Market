@@ -236,5 +236,3 @@ def fetch_price_data_task():
                 
     logger.info(f"Price fetch task completed. Processed {total_candles} price candles.")
     return {"status": "success", "candles_processed": total_candles}
-
-# clean architecture alignment

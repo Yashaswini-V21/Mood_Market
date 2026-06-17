@@ -227,5 +227,3 @@ def run_risk_assessment_task(self):
         countdown = 5 ** (self.request.retries + 1)
         logger.error(f"Error in run_risk_assessment_task: {exc}")
         raise self.retry(exc=exc, countdown=countdown)
-
-# clean architecture alignment

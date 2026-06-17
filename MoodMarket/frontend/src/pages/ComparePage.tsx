@@ -40,11 +40,18 @@ const TICKER_PROFILES: Record<string, TickerProfile> = {
 
 const ALL_TICKERS = Object.keys(TICKER_PROFILES);
 
-// ─── Correlation matrix mock ───────────────────────────────────────────────────
+// ─── Correlation matrix — deterministic, stable across renders ───────────────
+function tickerHash(t: string): number {
+  // Simple deterministic hash so correlation never changes on re-render
+  return t.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+}
 function correlate(a: TickerProfile, b: TickerProfile): number {
   if (a.ticker === b.ticker) return 1.0;
   const diff = Math.abs(a.sentiment - b.sentiment) / 100 + Math.abs(a.rsi - b.rsi) / 100;
-  return +(1 - diff * 0.8 + (Math.random() - 0.5) * 0.2).toFixed(2);
+  // Deterministic jitter seeded from ticker pair
+  const seed = ((tickerHash(a.ticker) * 31 + tickerHash(b.ticker)) % 100) / 100;
+  const jitter = (seed - 0.5) * 0.2;
+  return +Math.min(1, Math.max(-1, 1 - diff * 0.8 + jitter)).toFixed(2);
 }
 
 // ─── Radar dimensions ─────────────────────────────────────────────────────────

@@ -28,5 +28,3 @@ def test_api_endpoints_latency(client: TestClient):
     assert elapsed_sentiment < 15000.0, f"Sentiment endpoint too slow: {elapsed_sentiment:.0f}ms"
     # Pipeline runs Informer inference on cold cache: allow up to 15s on resource-constrained CI runners
     assert elapsed_pipeline < 15000.0, f"Pipeline endpoint too slow: {elapsed_pipeline:.0f}ms"
-
-# clean architecture alignment

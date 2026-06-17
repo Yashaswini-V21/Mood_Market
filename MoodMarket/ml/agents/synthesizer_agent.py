@@ -134,5 +134,3 @@ class SynthesizerAgent(BaseAgent):
             "recommendation": "HOLD",
             "error_fallback": str(error)
         }
-
-# clean architecture alignment

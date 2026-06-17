@@ -786,5 +786,3 @@ class EvaluationVisualizer:
         plt.close()
         logger.info(f"Metrics comparison plot saved to {save_path}")
 
-
-# clean architecture alignment

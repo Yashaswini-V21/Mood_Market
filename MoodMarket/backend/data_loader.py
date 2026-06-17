@@ -232,5 +232,3 @@ def generate_synthetic_data(n_samples: int = 10000) -> np.ndarray:
     reddit_hype = np.random.exponential(5, n_samples)
 
     return np.column_stack([sentiment, close, volume, rsi, macd, bb, google_trends, reddit_hype])
-
-# clean architecture alignment

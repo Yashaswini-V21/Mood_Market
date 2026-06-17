@@ -151,5 +151,3 @@ async def run_all_migrations():
     except Exception as e:
         logger.error(f"Database migrations failed: {e}")
         raise
-
-# clean architecture alignment

@@ -133,5 +133,3 @@ class JWTAuthenticator:
         if user_id is None:
             return None
         return JWTAuthenticator.generate_token(user_id, extend_minutes)
-
-# clean architecture alignment

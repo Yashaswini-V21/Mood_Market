@@ -73,5 +73,3 @@ async def get_anomaly_status(
     except Exception as e:
         logger.error(f"Failed to query anomaly status for {ticker}: {e}")
         raise DatabaseException(f"Failed to query anomaly status: {str(e)}")
-
-# clean architecture alignment

@@ -91,5 +91,3 @@ class CacheStatsTracker:
 
 # Singleton tracker
 cache_stats_tracker = CacheStatsTracker()
-
-# clean architecture alignment
