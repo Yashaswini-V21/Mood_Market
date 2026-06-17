@@ -24,6 +24,9 @@ interface RealtimeProviderProps {
 }
 
 export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
+  const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  const apiWsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000';
+
   const [connectionStates, setConnectionStates] = useState<Record<string, ConnectionState>>({
     'global': 'disconnected',
     'anomaly': 'disconnected'
@@ -72,7 +75,7 @@ export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
 
     // 1. Fetch fallback price
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/fallback/price/${cleanTicker}`, { headers });
+      const res = await fetch(`${apiBaseUrl}/api/v1/fallback/price/${cleanTicker}`, { headers });
       if (res.ok) {
         const body = await res.json();
         setPriceData({
@@ -88,7 +91,7 @@ export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
 
     // 2. Fetch fallback sentiment
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/fallback/sentiment/${cleanTicker}`, { headers });
+      const res = await fetch(`${apiBaseUrl}/api/v1/fallback/sentiment/${cleanTicker}`, { headers });
       if (res.ok) {
         const body = await res.json();
         setSentimentData({
@@ -103,7 +106,7 @@ export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
 
     // 3. Fetch fallback anomaly details
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/anomaly/${cleanTicker}`, { headers });
+      const res = await fetch(`${apiBaseUrl}/api/v1/anomaly/${cleanTicker}`, { headers });
       if (res.ok) {
         const body = await res.json();
         if (body.anomaly_detected) {
@@ -128,8 +131,8 @@ export function RealtimeProvider({ children, ticker }: RealtimeProviderProps) {
 
   // Setup WS Client
   useEffect(() => {
-    const wsUrl = 'ws://localhost:8000';
-    const httpUrl = 'http://localhost:8000';
+    const wsUrl = apiWsUrl;
+    const httpUrl = apiBaseUrl;
 
     const client = new MoodMarketWSClient({
       onMessage: (channel, data) => {

@@ -8,7 +8,7 @@
 <!-- ── Animated subtitle (rotating key facts) ─────────────────────────────── -->
 <p align="center">
   <a href="https://github.com/Yashaswini-V21/Mood_Market">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=16&duration=2800&pause=900&color=A855F7&center=true&vCenter=true&width=720&lines=%E2%9A%A1%20Real-time%20social%20sentiment%20%E2%86%92%20price%20direction%20forecast;%F0%9F%94%B4%20HypeStorm%20Radar%E2%84%A2%20fires%20before%20the%20crowd%20notices;%F0%9F%A4%96%205-Agent%20async%20trading%20desk%20%7C%20Kelly%20risk%20sizing;%F0%9F%A7%AC%20FinBERT%20%2B%20DistilBERT%20%2B%20Informer%20Transformer%20stack;%F0%9F%90%B3%209-service%20Docker%20Compose%20%7C%20one%20command%20to%20run" alt="Typing animation"/>
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=16&duration=2800&pause=900&color=A855F7&center=true&vCenter=true&width=720&lines=%E2%9A%A1%20Real-time%20social%20sentiment%20%E2%86%92%20price%20direction%20forecast%3B%F0%9F%94%B4%20HypeStorm%20Radar%E2%84%A2%20fires%20before%20the%20crowd%20notices%3B%F0%9F%A4%96%205-Agent%20async%20trading%20desk%20%7C%20Kelly%20risk%20sizing%3B%F0%9F%A7%AC%20FinBERT%20%2B%20DistilBERT%20%2B%20Informer%20Transformer%20stack%3B%F0%9F%90%B3%209-service%20Docker%20Compose%20%7C%20one%20command%20to%20run" alt="Typing animation"/>
   </a>
 </p>
 

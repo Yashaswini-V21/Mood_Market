@@ -450,7 +450,7 @@ DEMO_HTML = """<!DOCTYPE html>
 
     <script>
         const tickers = {};
-        const ws = new WebSocket('ws://localhost:8765/ws');
+        const ws = new WebSocket('ws://localhost:' + (window.location.port ? parseInt(window.location.port) + 1 : 8766) + '/ws');
 
         function createCard(ticker) {
             const card = document.createElement('div');
@@ -538,6 +538,29 @@ DEMO_HTML = """<!DOCTYPE html>
 # MAIN
 # ============================================================================
 
+import threading
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+
+class DemoHTTPHandler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        # Suppress logging HTTP requests to keep terminal clean
+        pass
+
+    def do_GET(self):
+        if self.path in ("/", "/index.html"):
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(DEMO_HTML.encode())
+        else:
+            self.send_error(404, "File not found")
+
+def start_http_server(port):
+    server = HTTPServer(("localhost", port), DemoHTTPHandler)
+    server.serve_forever()
+
+
 async def main():
     parser = argparse.ArgumentParser(description="MoodMarket Demo Replay Server")
     parser.add_argument("--speed", type=float, default=10.0, help="Replay speed multiplier (default: 10x)")
@@ -552,6 +575,11 @@ async def main():
     timeline = generate_full_timeline(duration_minutes=args.duration)
     logger.info(f"Generated {len(timeline)} events across {len(TICKERS)} tickers.")
 
+    # Start HTTP server on args.port in a background daemon thread
+    logger.info(f"Starting HTTP server on http://localhost:{args.port} ...")
+    http_thread = threading.Thread(target=start_http_server, args=(args.port,), daemon=True)
+    http_thread.start()
+
     try:
         import websockets
         from websockets.asyncio.server import serve as ws_serve
@@ -559,27 +587,23 @@ async def main():
         # Fallback for older websockets versions
         import websockets
 
-    # HTTP handler to serve the demo dashboard
-    async def http_handler(path, request_headers=None):
-        """Serve the demo HTML dashboard at the root URL."""
-        if path == "/" or path == "/index.html":
-            return (200, [("Content-Type", "text/html")], DEMO_HTML.encode())
-
     async def handler(websocket):
         await replay_handler(websocket, args.speed, timeline)
 
-    # Start server
+    # Start WebSocket server on args.port + 1
+    ws_port = args.port + 1
+    logger.info(f"Starting WebSocket server on ws://localhost:{ws_port}/ws ...")
     try:
-        server = await ws_serve(handler, "localhost", args.port, process_request=http_handler)
+        server = await ws_serve(handler, "localhost", ws_port)
     except Exception:
         # Fallback for different websockets API versions
-        server = await websockets.serve(handler, "localhost", args.port)
+        server = await websockets.serve(handler, "localhost", ws_port)
 
     logger.info(f"")
     logger.info(f"  ╔══════════════════════════════════════════════╗")
     logger.info(f"  ║   🚀 MoodMarket Demo Server                 ║")
     logger.info(f"  ║   Dashboard:  http://localhost:{args.port}         ║")
-    logger.info(f"  ║   WebSocket:  ws://localhost:{args.port}/ws        ║")
+    logger.info(f"  ║   WebSocket:  ws://localhost:{ws_port}/ws        ║")
     logger.info(f"  ║   Speed:      {args.speed}x                          ║")
     logger.info(f"  ║   Duration:   {args.duration} minutes ({len(timeline)} events)    ║")
     logger.info(f"  ╚══════════════════════════════════════════════╝")

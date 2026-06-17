@@ -1,15 +1,6 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    postgresql-client \
-    libpq-dev \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
 
 # ── Context is ./MoodMarket (set in build.yml) ──────────────────────────────
 # COPY paths are relative to ./MoodMarket
