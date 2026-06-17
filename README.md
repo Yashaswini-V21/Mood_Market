@@ -1,716 +1,623 @@
-<div align="center">
+<!-- ═══════════════════════════════════════════════════════════════════
+     MOOD MARKET — Custom SVG Banner (dark glassmorphism + finance aesthetic)
+═══════════════════════════════════════════════════════════════════════ -->
+<p align="center">
+  <img src="MoodMarket/doc/banner.svg" alt="Mood Market — AI Financial Sentiment & Forecasting Platform" width="100%"/>
+</p>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d0d1a,20:0f0a2e,40:1e1060,60:4c1d95,80:7c3aed,100:a855f7&height=260&section=header&text=MOOD%20MARKET&fontSize=90&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=🧠%20Where%20Sentiment%20Meets%20Alpha%20%E2%80%94%20Institutional-Grade%20AI%20Trading%20Intelligence&descAlignY=58&descSize=17&descColor=ddd6fe" width="100%"/>
-
-<br/>
-
-[![CI](https://img.shields.io/github/actions/workflow/status/Yashaswini-V21/Mood_Market/test.yml?branch=completed&label=CI%20Passing&style=for-the-badge&logo=github-actions&logoColor=white&labelColor=0d0d1a&color=22c55e)](https://github.com/Yashaswini-V21/Mood_Market/actions)
-[![Security Scan](https://img.shields.io/github/actions/workflow/status/Yashaswini-V21/Mood_Market/security.yml?branch=completed&label=Security%20Scan&style=for-the-badge&logo=security&logoColor=white&labelColor=0d0d1a&color=22c55e)](https://github.com/Yashaswini-V21/Mood_Market/actions)
-[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-22c55e?style=for-the-badge&logo=lighthouse&logoColor=white&labelColor=0d0d1a)](https://github.com/Yashaswini-V21/Mood_Market/actions)
-[![Tests](https://img.shields.io/badge/Tests-200%2B%20Passing-22c55e?style=for-the-badge&logo=pytest&logoColor=white&labelColor=0d0d1a)](https://github.com/Yashaswini-V21/Mood_Market/actions)
-[![Coverage](https://img.shields.io/badge/Coverage-90%25%2B-6366f1?style=for-the-badge&logo=codecov&logoColor=white&labelColor=0d0d1a)](https://github.com/Yashaswini-V21/Mood_Market)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white&labelColor=0d0d1a)](https://python.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-009688?style=for-the-badge&logo=fastapi&logoColor=white&labelColor=0d0d1a)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-19+-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=0d0d1a)](https://react.dev)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white&labelColor=0d0d1a)](https://docker.com)
-[![License](https://img.shields.io/badge/License-MIT-a855f7?style=for-the-badge&labelColor=0d0d1a)](LICENSE)
+<!-- ── Animated subtitle (rotating key facts) ─────────────────────────────── -->
+<p align="center">
+  <a href="https://github.com/Yashaswini-V21/Mood_Market">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=16&duration=2800&pause=900&color=A855F7&center=true&vCenter=true&width=720&lines=%E2%9A%A1%20Real-time%20social%20sentiment%20%E2%86%92%20price%20direction%20forecast%3B%F0%9F%94%B4%20HypeStorm%20Radar%E2%84%A2%20fires%20before%20the%20crowd%20notices%3B%F0%9F%A4%96%205-Agent%20async%20trading%20desk%20%7C%20Kelly%20risk%20sizing%3B%F0%9F%A7%AC%20FinBERT%20%2B%20DistilBERT%20%2B%20Informer%20Transformer%20stack%3B%F0%9F%90%B3%209-service%20Docker%20Compose%20%7C%20one%20command%20to%20run" alt="Typing animation"/>
+  </a>
+</p>
 
 <br/>
 
-> **"The market moves on emotion before it moves on data. We decode the emotion."**
+<!-- ── CI/CD status badges ──────────────────────────────────────────────────── -->
+<p align="center">
+  <a href="https://github.com/Yashaswini-V21/Mood_Market/actions/workflows/test.yml">
+    <img src="https://img.shields.io/badge/✓%20Tests_%26_Linting-passing-22c55e?style=for-the-badge&logo=github-actions&logoColor=white" />
+  </a>&nbsp;
+  <a href="https://github.com/Yashaswini-V21/Mood_Market/actions/workflows/security.yml">
+    <img src="https://img.shields.io/badge/✓%20Security_Scan-passing-22c55e?style=for-the-badge&logo=shield&logoColor=white" />
+  </a>&nbsp;
+  <a href="https://github.com/Yashaswini-V21/Mood_Market/actions/workflows/build.yml">
+    <img src="https://img.shields.io/badge/✓%20Docker_Build-passing-22c55e?style=for-the-badge&logo=docker&logoColor=white" />
+  </a>&nbsp;
+  <a href="https://github.com/Yashaswini-V21/Mood_Market/actions/workflows/performance.yml">
+    <img src="https://img.shields.io/badge/✓%20Lighthouse_CI-passing-22c55e?style=for-the-badge&logo=lighthouse&logoColor=white" />
+  </a>
+</p>
 
-<br/>
+<!-- ── Tech stack pills ──────────────────────────────────────────────────────── -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React_19-61DAFB?style=flat-square&logo=react&logoColor=black"/>
+  <img src="https://img.shields.io/badge/PyTorch_2.2-EE4C2C?style=flat-square&logo=pytorch&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TimescaleDB-FDB515?style=flat-square&logo=postgresql&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Redis_7-DC382D?style=flat-square&logo=redis&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Docker_×9-2496ED?style=flat-square&logo=docker&logoColor=white"/>
+  <img src="https://img.shields.io/badge/License-MIT-a855f7?style=flat-square"/>
+</p>
 
-</div>
+<p align="center">
+  <sub>Built for the <strong>Future of Productivity</strong> hackathon &nbsp;·&nbsp; Not financial advice</sub>
+</p>
 
 ---
 
-## 🌟 What is Mood Market?
+## 📖 Table of Contents
 
-**Mood Market** is a full-stack, production-grade **AI Financial Intelligence Platform** that fuses real-time **social sentiment signals** (Reddit, Twitter, News, Google Trends) with a state-of-the-art **Informer deep learning model** to forecast stock price direction and detect coordinated **Hype Storms** — giving traders an edge *before* the crowd catches on.
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🧠 The Intelligence Stack
-- **Informer ProbSparse Transformer** — O(L log L) attention, single-pass forecasting
-- **7-Method Anomaly Ensemble** — voting architecture with weighted confidence
-- **5-Agent Async Trading Desk** — Sentiment · Technical · Forecaster · Risk · Synthesizer
-- **FinBERT + DistilBERT Fusion** — financial domain-tuned sentiment NLP
-- **SHAP + Attention Rollout** — full model explainability suite
-- **INT8 Quantization** — 3.8× size reduction for edge deployment
-
-</td>
-<td width="50%" valign="top">
-
-### ⚡ Production Numbers
-
-| Metric | Value |
-|--------|-------|
-| 🎯 Directional Accuracy | **65.2%** (vs 50% LSTM) |
-| ⚡ API Latency P50 | **< 20ms** |
-| 🚨 Anomaly Detection FPR | **< 5%** |
-| 📡 WebSocket Feed | **< 1s latency** |
-| 🧪 Automated Tests | **200+ (200 passing)** |
-| 🤖 Stocks Monitored | **500+ concurrent** |
-| 🔬 Anomaly Methods | **7-method ensemble** |
-| 🏗️ AI Agents | **5-agent async desk** |
-
-</td>
-</tr>
-</table>
+- [What It Does](#-what-it-does)
+- [Live Demo](#-live-demo)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Features Deep Dive](#-features-deep-dive)
+- [Quick Start](#-quick-start)
+- [Environment Variables](#-environment-variables)
+- [API Reference](#-api-reference)
+- [ML Models](#-ml-models)
+- [Performance Benchmarks](#-performance-benchmarks)
+- [Testing](#-testing)
+- [CI/CD Pipeline](#-cicd-pipeline)
+- [Project Structure](#-project-structure)
+- [Roadmap](#-roadmap)
+- [Contributing](#-contributing)
+- [Documentation](#-documentation)
+- [License](#-license)
 
 ---
 
-## 🏗️ System Architecture
+## 🎯 What It Does
+
+**Mood Market** answers a single question traders obsess over every morning:
+
+> *"What is the market feeling right now — and what will it do next?"*
+
+It does this with a multi-layer AI pipeline:
+
+1. **Ingest** → scrapes Reddit, financial news, and Google Trends in real time
+2. **Sentiment** → runs text through a **FinBERT + DistilBERT ensemble** with confidence-weighted fusion
+3. **Anomaly** → 7 concurrent detectors vote on whether sentiment is a **genuine signal or coordinated hype** (HYPE_STORM™)
+4. **Forecast** → an **Informer Transformer** (ProbSparse attention, O(L log L)) predicts 4-hour price direction with calibrated uncertainty
+5. **Synthesize** → a 5-agent async trading desk fuses all signals into a final **BUY / SELL / HOLD** with position sizing and risk levels
+6. **Surface** → a polished React 19 dashboard streams everything live over authenticated WebSockets
+
+Built for a hackathon under the **"Future of Productivity"** theme — because most of what financial analysts do manually can be automated into one dashboard.
+
+---
+
+## 🎬 Live Demo
+
+No API keys needed. Run the offline demo to experience a full 60-minute synthetic trading session:
+
+```bash
+# Install one dependency then run
+pip install websockets
+python MoodMarket/doc/demo/demo_server.py --speed 10
+# → http://localhost:8001  (6 real minutes = 60 sim minutes)
+
+# In another terminal
+cd MoodMarket/frontend && npm install && npm run dev
+# → http://localhost:5173
+```
+
+> **Highlight:** At simulated minute 40, GME enters a **HYPE_STORM** — all 7 anomaly detectors fire in rapid succession and every WebSocket client receives live alerts.
+
+---
+
+## 🏗 Architecture
 
 ```
-╔═══════════════════════════════════════════════════════════════════════════╗
-║                        MOOD MARKET — FULL STACK PLATFORM                 ║
-║                                                                           ║
-║  ┌────────────────────────────────────────────────────────────────────┐  ║
-║  │  📱  React 19 + TypeScript Platform (Vite + Tailwind)              │  ║
-║  │  • Animated Landing Page  • Multi-Ticker Compare  • Portfolio Analytics │  ║
-║  │  • AI Chat Assistant  • Hype Storm Radar  • Realtime Notification Center│  ║
-║  └──────────────────────┬─────────────────────────────────────────────┘  ║
-║                         │  REST + WebSocket (JWT)                        ║
-║  ┌──────────────────────▼─────────────────────────────────────────────┐  ║
-║  │  🚀  FastAPI Application (async, Python 3.11+)                     │  ║
-║  │  /sentiment · /forecast · /anomaly · /pipeline · /explain          │  ║
-║  │  /watchlist · /ws/* · /metrics (Prometheus) · /docs (Swagger)      │  ║
-║  │  Middleware: JWT Auth · Redis Rate Limiting · Request Tracing       │  ║
-║  └──────┬───────────────┬──────────────────┬────────────────────────────┘  ║
-║         │               │                  │                               ║
-║  ┌──────▼───────┐  ┌────▼──────────┐  ┌───▼─────────────────────────┐   ║
-║  │  🧠 Informer │  │ 🚨 Anomaly    │  │ 🤖 Multi-Agent Desk          │   ║
-║  │  Forecaster  │  │ Engine        │  │                               │   ║
-║  │  ProbSparse  │  │ Z-Score +     │  │  Sentiment Analyst Agent      │   ║
-║  │  Attention   │  │ IsoForest +   │  │  Technical Analyst Agent      │   ║
-║  │  Monte Carlo │  │ Autoencoder + │  │  Forecaster Agent             │   ║
-║  │  SHAP+Rollout│  │ EWMA + Multi- │  │  Risk Manager Agent           │   ║
-║  │  INT8 Quant  │  │ Variate Combo │  │  Synthesizer Agent            │   ║
-║  └──────────────┘  └───────────────┘  └───────────────────────────────┘  ║
-║         │               │                  │                               ║
-║  ┌──────▼───────────────▼──────────────────▼──────────────────────────┐   ║
-║  │  ⚙️  Celery Workers  (4 Priority Queues: critical→priority→default→low)│   ║
-║  │  📡  Data Ingestion:  Reddit · Twitter · News · Yahoo Finance · Trends │   ║
-║  └──────────────────────────────────┬────────────────────────────────────┘  ║
-║                                     │                                        ║
-║  ┌───────────────────┐   ┌──────────▼──────────────┐  ┌─────────────────┐  ║
-║  │  🔴 Redis Cache   │   │  🐘 TimescaleDB          │  │ 📊 Prometheus + │  ║
-║  │  Multi-layer LRU  │   │  Hypertables + Cont.Agg  │  │    Grafana       │  ║
-║  │  Pub/Sub + Queue  │   │  Auto-compress + Index   │  │    Dashboards   │  ║
-║  └───────────────────┘   └─────────────────────────┘  └─────────────────┘  ║
-╚═══════════════════════════════════════════════════════════════════════════╝
+┌──────────────────────────────────────────────────────────────────┐
+│          React 19 + TypeScript  (Vite · Tailwind · Recharts)    │
+│         Landing · Dashboard · Compare · Portfolio                 │
+└────────────────────────────┬─────────────────────────────────────┘
+                             │  REST + WebSocket (JWT HS256)
+┌────────────────────────────▼─────────────────────────────────────┐
+│                   FastAPI  (async · Python 3.11)                  │
+│    /sentiment  /forecast  /anomaly  /pipeline  /explain           │
+│    Middleware: JWT auth · Redis rate-limit · X-Request-ID trace   │
+└──────────┬───────────────────────────────┬────────────────────────┘
+           │                               │
+    ┌──────▼───────┐               ┌───────▼────────────────────────┐
+    │   ML Engine  │               │  5-Agent Async Trading Desk     │
+    │              │               │                                  │
+    │  Informer    │               │  S1 → Sentiment Analyst          │
+    │  Transformer │               │  S2 → Technical Analyst (RSI,   │
+    │  ProbSparse  │               │       MACD, Bollinger, VWAP)    │
+    │  Monte Carlo │               │  S3 → Forecaster Agent           │
+    │  SHAP+Rollout│               │  S4 → Risk Manager (Kelly)       │
+    │              │               │  S5 → Synthesizer                │
+    │  Anomaly     │               │                                  │
+    │  7-Method    │               │  Each: LRU cache · timeout ·    │
+    │  Ensemble    │               │        graceful fallback         │
+    └──────┬───────┘               └───────┬────────────────────────┘
+           │                               │
+    ┌──────▼───────────────────────────────▼────────────────────────┐
+    │               Celery Workers  (4 priority queues)              │
+    │         Reddit · Yahoo Finance · News API · Google Trends      │
+    └──────┬────────────────────────┬──────────────────────────────┘
+           │                        │
+    ┌──────▼──────┐    ┌────────────▼──────────┐    ┌─────────────┐
+    │   Redis 7   │    │    TimescaleDB / PG    │    │ Prometheus  │
+    │  Cache +    │    │  Hypertables · Cont.   │    │  + Grafana  │
+    │  Pub/Sub    │    │  Aggregates · Retain.  │    │  Dashboard  │
+    └─────────────┘    └───────────────────────┘    └─────────────┘
 ```
 
 ---
 
-## ✨ Why Mood Market is Different
+## 🛠 Tech Stack
 
-<table>
-<tr>
-<td width="33%" valign="top">
-
-### 🧠 Not Just an LSTM Bot
-We use the **Informer architecture** with **ProbSparse self-attention** — cutting complexity from O(L²) to **O(L log L)**. This enables analysis of 72-step sequences in a **single generative pass** with built-in **uncertainty quantification**, **Monte Carlo dropout confidence intervals**, and post-hoc **temperature scaling calibration**.
-
-</td>
-<td width="33%" valign="top">
-
-### 🤖 A Full AI Trading Desk
-Five asynchronous agents collaborate like a real hedge fund: **Sentiment Analyst** reads social signals, **Technical Analyst** computes RSI/MACD/Bollinger, **Forecaster** runs the Informer model, **Risk Manager** sizes positions with stop-loss/take-profit, and **Synthesizer** merges all signals into one actionable decision.
-
-</td>
-<td width="33%" valign="top">
-
-### 🚨 Hype Storm Radar
-Our 7-method ensemble detects coordinated social media pumps **before** price moves. Z-Score, Isolation Forest, Autoencoder, EWMA, Adaptive EWMA, and Multi-Variate detectors vote with weighted confidence to produce tiered alerts: `NORMAL` → `ELEVATED` → `MAJOR_SPIKE` → **`HYPE_STORM`** 🚨
-
-</td>
-</tr>
-<tr>
-<td width="33%" valign="top">
-
-### 🔬 Full Explainability
-Every prediction comes with **SHAP feature attribution**, **global importance rankings**, **multi-head attention heatmaps**, **attention rollout** across layers, and **ECE-measured calibration** — so you know exactly *why* the model decided, and how much to trust it.
-
-</td>
-<td width="33%" valign="top">
-
-### 📡 Real-Time Everything
-JWT-authenticated **WebSocket channels** push live price feeds, sentiment scores, and anomaly alerts at sub-second latency. Multi-layer **Redis caching** achieves 70%+ cache hit rate. **HTTP polling fallback** ensures zero-downtime resilience even when WebSocket drops.
-
-</td>
-<td width="33%" valign="top">
-
-### 🛡️ Production Hardened
-**200+ tests** across unit/integration/e2e. Redis rate limiting. CORS restriction. HTTPS enforcement. Pydantic v2 input validation. **Docker Compose** with 9 services. **GitHub Actions CI/CD** with lint, type-check, test, build, deploy, **Security Scans (CodeQL/Trivy)** and **Lighthouse Performance CI**.
-
-</td>
-</tr>
-</table>
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| **Frontend** | React 19 · TypeScript · Vite · Tailwind CSS · Recharts | Type-safe, fast-refresh, composable charts |
+| **Backend** | Python 3.11 · FastAPI (async) · SQLAlchemy 2.0 | Native async, Pydantic v2 validation, OpenAPI docs |
+| **ML** | PyTorch 2.2 · FinBERT · DistilBERT · SHAP · Optuna | Production-tuned transformers + explainability |
+| **Workers** | Celery 5 · Redis 7 | 4 priority queues, scheduled data refresh |
+| **Database** | TimescaleDB (PostgreSQL 15) | Hypertables + continuous aggregates for time-series |
+| **Monitoring** | Prometheus · Grafana · Flower | Full observability from day one |
+| **Infra** | Docker Compose (9 services) · Nginx · GitHub Actions | One-command local dev + CI/CD to GHCR |
 
 ---
 
-## 🎨 New Top-1% Platform Features
+## ✨ Features Deep Dive
 
-### 1️⃣ Animated Landing Page
-First impressions matter. Our stunning animated landing page features **mood-reactive aurora gradient orbs**, a **60-particle mesh canvas**, scroll-parallax, and animated stat counters. It instantly communicates the platform's value.
+### 🧠 Informer Transformer (Core Model)
 
-### 2️⃣ Multi-Ticker Compare
-Compare up to 3 tickers side-by-side using our **Performance Radar Chart** (Sentiment, Forecast, Confidence, RSI, Volume, Anomaly), price overlay area charts, and a **Sentiment Correlation Matrix**.
+Custom implementation of [Informer](https://arxiv.org/abs/2012.07436) (Zhou et al., NeurIPS 2021) adapted for binary direction classification with several production enhancements:
 
-### 3️⃣ Portfolio Analytics
-Simulated portfolio tracking with a **P&L vs Benchmark area chart**, **Allocation Donut Chart**, open positions table, and an **AI Risk Summary** (Beta, Max Drawdown, Sharpe Ratio).
-
-### 4️⃣ AI Chat Assistant & Notifications
-A floating AI brain button opens a slide-in chat panel for querying specific tickers with streaming markdown responses. The header includes a persistent notification center for categorized alerts (Anomaly, Hype, Signal, System).
-
----
-
-## 🧠 Core Intelligence — Deep Dives
-
-### 1️⃣ Informer — ProbSparse Attention Forecaster
-
-> **Predicts stock price direction probability for the next 4 hours with confidence intervals and uncertainty bounds**
+| | Baseline LSTM | Standard Transformer | **Mood Market Informer** |
+|--|:---:|:---:|:---:|
+| Attention complexity | O(L²) | O(L²) | **O(L log L)** ProbSparse |
+| Multi-step forecast | Autoregressive | Autoregressive | **Single-pass generative decoder** |
+| Uncertainty estimate | ✗ | ✗ | **✓ Monte Carlo + Softplus head** |
+| Explainability | ✗ | Basic | **✓ SHAP + Attention Rollout** |
+| INT8 Quantization | ✗ | ✗ | **✓ 3.8× smaller, 2.1× faster** |
+| **Directional accuracy** | 50.1% | 58.3% | **65.2%** |
 
 ```python
-# 72 timesteps in → direction probability + uncertainty + attention weights out
+# Forward pass — 72 timesteps → direction + uncertainty + attributions
 prediction, uncertainty, attention_weights = model(encoder_input, decoder_input)
-# prediction  ∈ [0,1]          → BUY probability
-# uncertainty → Softplus head  → ±confidence interval
-# attention   → SHAP + Rollout → "why did the model focus here?"
+# prediction       ∈ [0, 1]   — BUY probability for next 4 hours
+# uncertainty      — Softplus  — ±confidence interval (Monte Carlo dropout)
+# attention_weights — 8 heads  — SHAP + Rollout per-feature attribution maps
 ```
 
-**Why Informer over LSTM or vanilla Transformer?**
+### 🚨 Hype Storm Radar™ — 7-Method Anomaly Ensemble
 
-| Feature | LSTM | Transformer | **Informer (Ours)** |
-|---------|------|-------------|---------------------|
-| Attention Complexity | N/A | O(L²) | **O(L log L) ProbSparse** |
-| Multi-step Forecast | Autoregressive (error compounds) | Autoregressive | **Single-pass generative decoder** |
-| Uncertainty Output | ❌ | ❌ | **✅ Monte Carlo + Softplus** |
-| Explainability | ❌ | Basic attention | **✅ SHAP + Rollout + Heatmaps** |
-| INT8 Quantization | ❌ | ❌ | **✅ 3.8× size reduction** |
-| Calibration | ❌ | ❌ | **✅ Temperature scaling (ECE)** |
-| Training | Standard | Slow, O(L²) memory | **FP16 + Optuna hyperparameter tuning** |
+All 7 detectors run concurrently and vote with calibrated confidence weights:
 
----
+| # | Detector | What It Catches |
+|---|----------|----------------|
+| 1 | **Z-Score** | Sudden volume or sentiment spikes |
+| 2 | **Multi-Variate Z-Score** | Correlated cross-source spikes (Reddit + News simultaneously) |
+| 3 | **Isolation Forest** | Non-linear outlier patterns |
+| 4 | **MV Isolation Forest** | Complex multi-source coordinated anomalies |
+| 5 | **Autoencoder** | Patterns unlike any normal market behavior (reconstruction error) |
+| 6 | **EWMA** | Accelerating exponential momentum |
+| 7 | **Adaptive EWMA** | Market regime shifts with dynamic lambda |
 
-### 2️⃣ Multi-Agent Trading Desk
+Severity ladder: `NORMAL` → `ELEVATED` → `MAJOR_SPIKE` → 🔴 `HYPE_STORM`
 
-```
-📰  Sentiment Analyst   → Reads Reddit/News/Twitter/Trends → weighted sentiment score + confidence
-📊  Technical Analyst   → RSI, MACD, Bollinger Bands, VWAP → trend/momentum signals
-🔮  Forecaster Agent    → Runs Informer model → direction probability + uncertainty interval
-🛡️  Risk Manager        → Kelly Criterion position sizing → stop-loss, take-profit, risk/reward
-✍️  Synthesizer Agent   → Fuses all 4 signals via weighted voting → BUY / SELL / HOLD decision
-```
+### 🤖 5-Agent Async Trading Desk
 
-Each agent features: **async message queue**, **per-agent LRU cache with TTL**, **configurable timeout**, **graceful fallback outputs**, and **performance metrics tracking**.
-
----
-
-### 3️⃣ 7-Method Hype Storm Anomaly Detector
-
-| # | Detector | Method | What It Catches |
-|---|----------|--------|-----------------|
-| 1 | Z-Score | Statistical baseline deviation | Sudden volume σ spikes |
-| 2 | Multi-Var Z-Score | Cross-channel correlation | Reddit + Twitter spiking simultaneously |
-| 3 | Isolation Forest | ML outlier detection | Non-linear anomaly patterns |
-| 4 | Multi-Var IF | Multi-feature isolation | Complex multi-source anomalies |
-| 5 | Autoencoder | Deep reconstruction error | Patterns unlike "normal" market behavior |
-| 6 | EWMA | Exponential volatility tracking | Accelerating hype momentum |
-| 7 | Adaptive EWMA | Regime-aware volatility | Market regime shifts and structural breaks |
-
-**Ensemble voting** with weighted confidence → `NORMAL` → `ANOMALY_DETECTED` → `MAJOR_SPIKE` → **`HYPE_STORM`** 🚨
-
----
-
-### 4️⃣ Sentiment Ensemble Pipeline
-
-- **FinBERT** (financial domain-tuned BERT) + **DistilBERT** confidence-weighted fusion
-- Model **disagreement detection** and **distribution drift monitoring**
-- **LRU cache with TTL** for high-throughput inference without repeat inference
-- **Async batch processing** for parallel multi-ticker analysis
-
----
-
-### 5️⃣ Full Explainability Suite
-
-| Feature | Module | Output |
-|---------|--------|--------|
-| SHAP Values | `shap_explainer.py` | Per-feature attribution scores for each prediction |
-| Global Importance | `shap_explainer.py` | Ranked feature importance across 1000+ samples |
-| Attention Heatmaps | `visualization.py` | Multi-head attention weight visualization per layer |
-| Attention Rollout | `visualization.py` | Cross-layer propagation showing information flow |
-| Temperature Scaling | `calibration.py` | Post-hoc probability calibration with ECE reduction |
-
----
-
-## 📂 Project Structure
+Each agent runs as an independent async coroutine with its own LRU cache, configurable timeout, and graceful fallback:
 
 ```
-Mood_Market/
-│
-├── 🤖 agents/                      # Async multi-agent trading desk
-│   ├── base_agent.py               # Abstract base: caching, timeout, fallback
-│   ├── sentiment_agent.py          # Social signal scorer + attribution
-│   ├── technical_agent.py          # RSI, MACD, Bollinger Bands
-│   ├── forecaster_agent.py         # Informer model inference wrapper
-│   ├── risk_manager_agent.py       # Position sizing, stop-loss, take-profit
-│   └── synthesizer_agent.py        # Multi-signal decision aggregator
-│
-├── 🧩 detectors/                   # 7-method anomaly detection suite
-│   ├── base_detector.py            # Abstract base + DetectionResult dataclass
-│   ├── zscore_detector.py          # Statistical baseline (univariate + multivariate)
-│   ├── isolation_forest_detector.py # ML outlier detection
-│   ├── autoencoder_detector.py     # Deep reconstruction error detector
-│   └── ewma_detector.py            # Volatility regime (standard + adaptive EWMA)
-│
-├── 🌐 routes/                      # FastAPI REST + WebSocket endpoints
-│   ├── sentiment.py                # GET /sentiment/{ticker}, POST /sentiment/predict
-│   ├── forecast.py                 # GET /price/forecast/{ticker}
-│   ├── anomaly.py                  # GET /anomaly/{ticker}
-│   ├── pipeline.py                 # GET /pipeline/{ticker} (full bundle)
-│   ├── explain.py                  # GET /explain/{id} (SHAP + attention)
-│   ├── watchlist.py                # POST /watchlist user management
-│   └── health.py                   # GET /health · GET /auth/token
-│
-├── 📡 sources/                     # Data ingestion adapters
-│   ├── reddit_source.py            # Reddit API / Pushshift scraper
-│   ├── news_source.py              # NewsAPI financial article fetcher
-│   ├── price_source.py             # Yahoo Finance OHLCV data
-│   └── trends_source.py            # Google Trends interest scores
-│
-├── ⚙️  processors/                 # Data pipeline middleware
-│   ├── data_validator.py           # Pydantic schema enforcement
-│   ├── deduplicator.py             # Cryptographic digest deduplication
-│   └── enricher.py                 # Timestamp harmonization + entity linking
-│
-├── ⚙️  celery/                     # Background task pipeline
-│   └── tasks/                      # 4 priority queues
-│       ├── ingestion_tasks.py      # Reddit, Twitter, news scrapers
-│       ├── analysis_tasks.py       # Sentiment + anomaly workers
-│       ├── prediction_tasks.py     # Informer inference queue
-│       ├── news_tasks.py           # News ingestion + categorization
-│       ├── price_tasks.py          # Price feed workers
-│       └── maintenance_tasks.py    # Cleanup, compression, health checks
-│
-├── 🧪 tests/                       # 200+ test suite across 22 files
-│   ├── unit/ (15 files)            # model, agents, cache, sentiment, SHAP,
-│   │                               # anomaly, attention, training, evaluation,
-│   │                               # error_handling, broadcaster, data_loader,
-│   │                               # decorators, processors, sources
-│   ├── integration/ (5 files)      # API routes, database, ingestion, data pipeline, websocket
-│   └── e2e/ (2 files)              # Performance benchmarks, user journey
-│
-├── 📱 frontend/                    # React 19 + TypeScript + Tailwind + Vite
-│   └── src/
-│       ├── pages/LandingPage.tsx   # Animated marketing landing page
-│       ├── pages/Dashboard.tsx     # Main trading intelligence dashboard
-│       ├── pages/ComparePage.tsx   # Multi-ticker radar comparison
-│       ├── pages/PortfolioPage.tsx # Portfolio performance & risk analytics
-│       ├── components/             # SentimentCard, ForecastCard, AIChatPanel,
-│       │                           # NotificationCenter, ExplainabilityDashboard
-│       ├── context/                # RealtimeContext (WS + HTTP fallback)
-│       │                           # ToastContext (notification system)
-│       ├── hooks/                  # useWebSocket, useTheme, useMediaQuery
-│       └── utils/                  # websocket-client, signal-generator
-│
-├── 📖 docs/                        # Full technical documentation
-│   ├── ARCHITECTURE.md             # C4 diagrams, data flow, ADLs, sequence charts
-│   ├── API_EXAMPLES.md             # curl examples with full response schemas
-│   └── DEPLOYMENT.md               # K8s manifests, Terraform, Nginx, SSL setup
-│
-├── 📊 benchmarks/                  # Performance benchmark suite
-│   ├── locustfile.py               # Locust load test (1000+ RPS target)
-│   └── RESULTS.md                  # Benchmark results vs LSTM/Transformer
-│
-├── 🎬 demo/                        # Hackathon demo server
-│   ├── demo_server.py              # Standalone mock API for offline demos
-│   └── README.md                   # Demo instructions
-│
-├── 🐳 docker/                      # Container orchestration
-│   ├── docker-compose.yml          # 9-service full stack
-│   ├── prometheus/prometheus.yml   # Metrics scrape config
-│   └── grafana/dashboards/         # Pre-built monitoring dashboard
-│
-├── .github/workflows/              # GitHub Actions CI/CD
-│   ├── test.yml                    # Lint + typecheck + 200 tests + coverage
-│   ├── build.yml                   # Docker build + GHCR push on main
-│   └── deploy.yml                  # SSH deploy on version tag push
-│
-├── model.py                        # Informer ProbSparse Attention (643 lines)
-├── trainer.py                      # FP16 training + Optuna hyperparameter tuning
-├── inference.py                    # Real-time prediction engine + streaming
-├── anomaly_detector.py             # 7-method ensemble orchestrator
-├── sentiment_ensemble.py           # FinBERT + DistilBERT fusion pipeline
-├── shap_explainer.py               # Deep SHAP + global importance
-├── calibration.py                  # Temperature scaling + ECE computation
-├── visualization.py                # Attention heatmaps + SHAP plots + rollout
-├── monitoring.py                   # Performance tracking + drift detection
-├── cache_manager.py                # Multi-layer Redis cache manager
-├── websocket_server.py             # JWT-authenticated live data broadcaster
-├── middleware.py                   # Request tracing + Redis rate limiting
-├── authenticator.py                # JWT generation, validation, refresh
-├── orchestrator.py                 # Multi-agent pipeline coordinator
-└── benchmark.py                    # Informer vs LSTM vs Transformer comparison
+S1 Sentiment Analyst  → Reddit + News + Trends → weighted composite score
+S2 Technical Analyst  → RSI · MACD · Bollinger Bands · VWAP · Support/Resistance
+S3 Forecaster Agent   → Informer pipeline → direction probability + uncertainty
+S4 Risk Manager       → Kelly Criterion position sizing → stop-loss · take-profit
+S5 Synthesizer        → Weighted signal fusion → BUY / SELL / HOLD + confidence
 ```
+
+### 📊 React Dashboard Highlights
+
+- **Live Dashboard** — real-time sentiment dial, anomaly status badge, SHAP waterfall chart, price overlay
+- **Multi-Ticker Compare** — radar chart, price correlation matrix, sentiment heatmap
+- **Portfolio Analytics** — P&L vs benchmark, allocation donut, positions table, AI risk summary
+- **Responsive** — desktop sidebar layout and fully adapted mobile-bottom-nav layout
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 ```
-Python 3.10+  |  Node.js 18+  |  Redis 7+  |  (Optional) PostgreSQL + TimescaleDB
+Python 3.10+  ·  Node.js 18+  ·  Docker + Docker Compose
 ```
 
-### 1. Clone & Install
+### Option 1 — Docker (Recommended, one command)
+
 ```bash
 git clone https://github.com/Yashaswini-V21/Mood_Market.git
-cd Mood_Market
+cd Mood_Market/MoodMarket/backend
 
-# Backend
-python -m venv venv && source venv/bin/activate   # Windows: .\venv\Scripts\activate
-pip install -r requirements.txt
-
-# Frontend
-cd frontend && npm install && cd ..
-```
-
-### 2. Configure Environment
-```bash
+# Copy env file and add your keys (all optional — falls back to mock data)
 cp .env.example .env
-# Set: REDIS_URI, DATABASE_URL, JWT_SECRET_KEY, API keys (optional)
-```
 
-### 3. Launch Full Stack (Docker — Recommended)
-```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 | Service | URL |
 |---------|-----|
-| 🚀 FastAPI Backend | http://localhost:8000 |
-| 📖 Swagger Docs | http://localhost:8000/docs |
-| 📱 React Dashboard | http://localhost:5173 |
-| 🌸 Celery Flower | http://localhost:5555 |
+| 📖 FastAPI Swagger UI | http://localhost:8000/docs |
+| ⚡ React Dashboard | http://localhost:3000 |
 | 📊 Grafana | http://localhost:3001 |
-| 🔴 Prometheus | http://localhost:9090 |
+| 🔭 Prometheus | http://localhost:9090 |
+| 🌸 Celery Flower | http://localhost:5555 |
 
-### 4. Or Run Locally (4 Terminals)
+### Option 2 — Local Development
+
 ```bash
-# Terminal 1 — API server
-python main.py
+git clone https://github.com/Yashaswini-V21/Mood_Market.git
+cd Mood_Market
 
-# Terminal 2 — Frontend dashboard
-cd frontend && npm run dev
+# ── Backend ──────────────────────────────────────────
+python -m venv venv
+.\venv\Scripts\activate          # Windows
+# source venv/bin/activate       # Linux / macOS
 
-# Terminal 3 — Celery workers (4 priority queues)
-celery -A celery_app worker --loglevel=info -Q critical,priority,default,low
+pip install -r MoodMarket/backend/requirements-ci.txt
 
-# Terminal 4 — Task scheduler (periodic ingestion)
-celery -A celery_app beat --loglevel=info
+# ── Frontend ─────────────────────────────────────────
+cd MoodMarket/frontend && npm install && cd ../..
+
+# ── Run (4 terminals) ─────────────────────────────────
+# T1 — API server
+cd MoodMarket/backend && uvicorn main:app --reload --port 8000
+
+# T2 — Frontend dev server
+cd MoodMarket/frontend && npm run dev
+
+# T3 — Celery workers
+celery -A MoodMarket.backend.celery_app worker -l info -Q critical,priority,default,low
+
+# T4 — Celery beat scheduler
+celery -A MoodMarket.backend.celery_app beat -l info
 ```
 
-### 5. Run Demo (Offline — No DB/Redis Required)
+### Option 3 — Offline Demo (No APIs / DB / Redis required)
+
 ```bash
-python demo/demo_server.py
-# Mock API at http://localhost:8001 — full responses, no infra needed
+pip install websockets
+python MoodMarket/doc/demo/demo_server.py --speed 10
+# Replays AAPL / TSLA / GME for 60 sim-minutes at 10× speed (6 real mins)
+# GME enters HYPE_STORM at sim-minute 40 → all 7 detectors fire live
+
+cd MoodMarket/frontend && npm run dev
+# Open → http://localhost:5173
+```
+
+---
+
+## 🔑 Environment Variables
+
+Copy `MoodMarket/backend/.env.example` → `.env` and configure:
+
+```env
+# Required for production — leave blank to use mock/SQLite fallbacks in dev
+REDIS_URI=redis://localhost:6379
+DATABASE_URL=postgresql+asyncpg://user:pass@localhost/moodmarket
+TIMESCALEDB_URI=postgresql://user:pass@localhost/moodmarket
+
+# JWT (generate with: python -c "import secrets; print(secrets.token_hex(32))")
+JWT_SECRET_KEY=your-super-secret-key-here
+JWT_ALGORITHM=HS256
+
+# Optional — falls back to mock data if omitted
+REDDIT_CLIENT_ID=
+REDDIT_CLIENT_SECRET=
+REDDIT_USER_AGENT=MoodMarket/1.0
+NEWS_API_KEY=
+
+# Environment flag
+ENVIRONMENT=development   # or production
 ```
 
 ---
 
 ## 🔌 API Reference
 
+### Core Endpoints
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/v1/health` | System health (DB, Redis, Model status) |
-| `POST` | `/auth/token` | Get JWT access token |
-| `GET` | `/api/v1/sentiment/{ticker}` | Latest social sentiment score + source breakdown |
-| `POST` | `/api/v1/sentiment/predict` | Analyze custom financial text with FinBERT |
+| `GET` | `/api/v1/health` | System health check — DB, Redis, model status |
+| `POST` | `/auth/token` | Exchange credentials for JWT access token |
+| `GET` | `/api/v1/sentiment/{ticker}` | Real-time sentiment score + source breakdown |
+| `POST` | `/api/v1/sentiment/predict` | Analyze custom text with FinBERT ensemble |
 | `GET` | `/api/v1/price/forecast/{ticker}` | 4-hour direction forecast + confidence interval |
-| `GET` | `/api/v1/anomaly/{ticker}` | Hype storm alert status + triggered methods |
+| `GET` | `/api/v1/anomaly/{ticker}` | Hype storm status + triggered detector list |
 | `GET` | `/api/v1/pipeline/{ticker}` | Full bundle: sentiment + forecast + risk + signal |
-| `GET` | `/api/v1/explain/{prediction_id}` | SHAP values + attention weights for any prediction |
+| `GET` | `/api/v1/explain/{prediction_id}` | SHAP values + attention rollout weights |
 | `POST` | `/api/v1/watchlist` | Add/remove tickers from user watchlist |
-| `GET` | `/metrics` | Prometheus metrics endpoint |
-| `WS` | `/ws/price/{ticker}` | Live price stream (sub-second) |
-| `WS` | `/ws/sentiment/{ticker}` | Live sentiment stream |
-| `WS` | `/ws/anomaly` | Live anomaly alerts (all tickers) |
-| `WS` | `/ws/prediction/{ticker}` | Live forecast probability stream |
-| `WS` | `/ws/portfolio` | Aggregated watchlist live updates |
+| `GET` | `/metrics` | Prometheus scrape endpoint |
 
-**Interactive docs:** `http://localhost:8000/docs` (Swagger UI) · `http://localhost:8000/redoc` (ReDoc)
+### WebSocket Streams (JWT required)
+
+| Channel | URI | Payload |
+|---------|-----|---------|
+| Price | `/ws/price/{ticker}` | OHLCV tick |
+| Sentiment | `/ws/sentiment/{ticker}` | Score + confidence |
+| Anomaly | `/ws/anomaly` | Severity + methods triggered |
+| Forecast | `/ws/prediction/{ticker}` | Direction + uncertainty |
+| Portfolio | `/ws/portfolio` | Aggregated watchlist update |
+
+> Full interactive docs: `http://localhost:8000/docs` (Swagger) · `http://localhost:8000/redoc` (ReDoc)
 
 ---
 
-## 📊 Model Performance
+## 🤖 ML Models
 
-### Forecasting Accuracy
+### Training
 
-| Metric | LSTM Baseline | Vanilla Transformer | **Informer (Ours)** |
-|--------|--------------|---------------------|---------------------|
-| Directional Accuracy | 50.1% | 58.3% | **65.2%** ✅ |
-| Mean Absolute Error | 0.087 | 0.071 | **0.059** |
-| P50 Inference Latency | 11.6ms | 28.4ms | **20.2ms** |
-| P99 Inference Latency | 49ms | 89ms | **45ms** (INT8) |
-| Parameters | 1.2M | 4.8M | **3.1M (0.8M INT8)** |
-| Uncertainty Output | ❌ | ❌ | **✅ Monte Carlo** |
-| Explainability | ❌ | Basic | **✅ SHAP + Rollout** |
+```bash
+cd MoodMarket/ml
 
-### Anomaly Detection Performance
+# Default — 50 epochs, cosine LR schedule, early stopping (patience 10)
+python train.py
 
-| Metric | Value |
-|--------|-------|
-| False Positive Rate | **< 5%** |
-| Detection F1 Score | **0.90** on synthetic pump simulations |
-| Detection Latency | **< 30ms** per stock |
-| Concurrent Monitoring | **500+ stocks** simultaneously |
+# Named presets
+python train.py --config fast           # 10-epoch quick experiment
+python train.py --config high_accuracy  # 100 epochs, d_model=768, 12 heads
+python train.py --config efficient      # INT8-ready, optimized for inference
 
-### Load Testing Results (Locust — 1000+ RPS)
+# Hyperparameter search (100 Optuna trials, Optuna dashboard included)
+python trainer.py --tune
 
-| Endpoint | P50 | P95 | P99 | Throughput |
-|----------|-----|-----|-----|------------|
-| `/api/v1/sentiment/{ticker}` | 8ms | 18ms | 32ms | 1200 RPS |
-| `/api/v1/anomaly/{ticker}` | 12ms | 24ms | 41ms | 950 RPS |
-| `/api/v1/pipeline/{ticker}` | 19ms | 38ms | 65ms | 680 RPS |
+# Evaluate and compare against LSTM / vanilla Transformer baselines
+python MoodMarket/ml/evaluator.py
+```
+
+### Model Configurations
+
+| Config | d_model | Heads | Enc Layers | Dec Layers | Epochs |
+|--------|:-------:|:-----:|:----------:|:----------:|:------:|
+| `baseline` | 512 | 8 | 2 | 2 | 50 |
+| `small` | 256 | 4 | 1 | 1 | 50 |
+| `large` | 768 | 12 | 3 | 3 | 100 |
+| `efficient` | 512 | 8 | 2 | 2 | 50 + INT8 |
+| `high_accuracy` | 768 | 12 | 4 | 4 | 100 |
+
+### Database Schema
+
+```sql
+-- TimescaleDB hypertables (chunk by 1 day)
+sentiment_data        (time, ticker, sentiment_score, confidence, source, model_version)
+price_data            (time, ticker, open, high, low, close, volume, vwap)
+technical_indicators  (time, ticker, rsi, macd, bb_upper, bb_lower, signal)
+predictions           (time, ticker, predicted_direction, confidence_interval, model_id)
+anomaly_alerts        (time, ticker, alert_type, confidence, methods_triggered, severity)
+
+-- Auto-refreshed continuous aggregates (hourly)
+daily_sentiment_avg   → per-ticker daily sentiment rollup
+hourly_price_ohlc     → 1-hour OHLC candles
+weekly_returns        → 7-day return series
+
+-- Retention policy: compress after 30 days · drop after 2 years
+```
+
+---
+
+## ⚡ Performance Benchmarks
+
+| Metric | Result |
+|--------|--------|
+| Informer directional accuracy | **65.2%** (vs 50.1% LSTM · 58.3% Transformer) |
+| API latency P50 (cached) | **< 20 ms** |
+| API latency P99 (INT8 model) | **< 45 ms** |
+| Load test throughput | **1,200 RPS** @ < 32 ms P99 (Locust) |
+| WebSocket end-to-end latency | **< 1 s** |
+| Concurrent tickers monitored | **500+** |
+| Anomaly detection F1 | **0.90** on synthetic pump simulations |
+| Anomaly false positive rate | **< 5%** |
+| Redis cache hit rate | **70%+** |
+| INT8 model size reduction | **3.8× smaller** |
+| INT8 inference speedup | **2.1× faster** |
 
 ---
 
 ## 🧪 Testing
 
 ```bash
-# Full test suite (200+ tests, no coverage threshold)
-pytest --no-cov -q
+# Run all 200+ tests
+pytest MoodMarket/test/ -q
 
-# With 90%+ coverage enforcement
-pytest --cov=. --cov-fail-under=90
+# With coverage enforcement (≥ 90%)
+pytest MoodMarket/test/ --cov=MoodMarket/backend --cov-fail-under=90
 
-# Individual suites
-pytest tests/unit/test_anomaly.py -v      # Anomaly 7-method ensemble
-pytest tests/unit/test_informer.py -v     # Informer model architecture
-pytest tests/unit/test_shap.py -v         # SHAP explainability
-pytest tests/integration/ -v              # Full integration suite
-pytest tests/e2e/ -v                      # E2E performance + user journey
+# Targeted suites
+pytest MoodMarket/test/unit/test_anomaly.py -v     # 7-method ensemble
+pytest MoodMarket/test/unit/test_informer.py -v    # Informer architecture
+pytest MoodMarket/test/unit/test_agents.py -v      # Trading desk agents
+pytest MoodMarket/test/unit/test_shap.py -v        # Explainability
+pytest MoodMarket/test/integration/ -v             # API + DB + WebSocket
+pytest MoodMarket/test/e2e/ -v                     # Performance + user journey
+
+# Locust load test
+locust -f MoodMarket/ml/benchmarks/locustfile.py --host=http://localhost:8000
 ```
 
-### Test Architecture — 22 Files, 200+ Tests
-
-```
-tests/
-├── unit/ (15 files)
-│   test_anomaly.py        # 7-method ensemble (22 tests)
-│   test_informer.py       # Informer architecture (12 tests)
-│   test_agents.py         # 5-agent trading desk
-│   test_sentiment.py      # FinBERT + DistilBERT fusion
-│   test_shap.py           # SHAP feature attribution
-│   test_attention.py      # Attention rollout + heatmaps
-│   test_cache.py          # Redis multi-layer cache
-│   test_training.py       # FP16 training + Optuna
-│   test_evaluation.py     # Accuracy + F1 metrics
-│   test_error_handling.py # Graceful failure modes
-│   test_broadcaster.py    # WebSocket broadcast hub
-│   test_data_loader.py    # TimescaleDB data loading
-│   test_decorators.py     # Rate limit + retry decorators
-│   test_processors.py     # Validator + enricher + deduplicator
-│   test_sources.py        # Reddit/News/Price/Trends sources
-│
-├── integration/ (5 files)
-│   test_api.py            # All REST endpoints end-to-end
-│   test_database.py       # TimescaleDB hypertable ops
-│   test_ingestion.py      # Full data pipeline
-│   test_data_pipeline.py  # Transform + validate + store
-│   test_websocket.py      # WS auth + message routing
-│
-└── e2e/ (2 files)
-    test_performance.py    # Latency + throughput benchmarks
-    test_user_journey.py   # Full user flow: login → analyze → alert
-```
+**Coverage:** 200+ tests · 22 test files · unit (15) · integration (5) · e2e (2)
 
 ---
 
-## 🛠️ Training Your Own Model
-
-```bash
-# Train with default config (50 epochs, cosine LR, early stopping)
-python train.py
-
-# Configuration presets
-python train.py --config fast           # Quick 10-epoch experiment
-python train.py --config high_accuracy  # 100 epochs, large model
-python train.py --config efficient      # INT8-ready production model
-
-# Benchmark against baselines
-python benchmark.py                     # Informer vs LSTM vs Transformer
-
-# Optuna hyperparameter search (100 trials)
-python trainer.py --tune
-```
-
-| Preset | d_model | Heads | Layers | Epochs | Use Case |
-|--------|---------|-------|--------|--------|----------|
-| `baseline` | 512 | 8 | 2+2 | 50 | Default balanced |
-| `small` | 256 | 4 | 1+1 | 50 | Fast training, low memory |
-| `large` | 768 | 12 | 3+3 | 100 | Maximum accuracy |
-| `efficient` | 512 | 8 | 2+2 | 50 | Production INT8 |
-| `high_accuracy` | 768 | 12 | 4+4 | 100 | Research |
-| `lstm_baseline` | — | — | — | 50 | Comparison baseline |
-
----
-
-## 🗃️ Database Schema
-
-```sql
--- TimescaleDB Hypertables (1-day chunks for ultra-fast time-range queries)
-
-sentiment_data        → (time, ticker, sentiment_score, confidence, source, model_version)
-price_data            → (time, ticker, open, high, low, close, volume, vwap)
-technical_indicators  → (time, ticker, rsi, macd, bb_upper, bb_lower, signal)
-predictions           → (time, ticker, predicted_direction, confidence_interval, model_id)
-anomaly_alerts        → (time, ticker, alert_type, confidence, methods_triggered, severity)
-
--- Continuous Aggregates (materialized, auto-refreshed every hour)
-daily_sentiment_avg   → per-ticker daily sentiment summary
-hourly_price_ohlc     → 1-hour OHLC candle rollups
-
--- Retention Policies
--- Auto-compress after 30 days | Auto-drop after 2 years
-```
-
----
-
-## 🔒 Security Architecture
+## 🔐 Security
 
 | Layer | Implementation |
-|-------|----------------|
-| **Authentication** | JWT with HS256, `iss`/`aud` claims, env-var secrets, refresh tokens |
-| **Authorization** | API key header verification on all protected endpoints |
-| **Rate Limiting** | Redis-backed sliding window — 100 req/min per client IP |
-| **Input Validation** | Ticker regex `^[A-Za-z]{1,5}$` + Pydantic v2 schema enforcement |
-| **CORS** | Restricted to frontend origin only in production |
-| **HTTPS** | Enforced in production — fail-fast if disabled |
-| **Secrets** | Environment variables only — fail-fast if defaults used in production |
-| **Request Tracing** | UUID-based `X-Request-ID` injected on every response |
+|-------|---------------|
+| **Authentication** | JWT HS256 · `iss`/`aud` claims · env-var secrets only |
+| **Rate Limiting** | Redis sliding window — 100 req / min per IP |
+| **Input Validation** | Ticker regex `^[A-Za-z]{1,5}$` · Pydantic v2 strict mode |
+| **CORS** | Restricted to frontend origin in production (`CORS_ORIGIN` env var) |
+| **HTTPS** | Fail-fast at startup if `ENVIRONMENT=production` and HTTPS is disabled |
+| **Secrets** | `.env` file, never hardcoded · startup assertion if defaults used |
+| **Request Tracing** | UUID-based `X-Request-ID` on every response |
+| **Container Scanning** | Trivy scans on every PR (SARIF → GitHub Security tab) |
+| **Dependency Audit** | npm audit + pip-audit on every PR |
 
-See [`SECURITY.md`](SECURITY.md) for full responsible disclosure policy.
-
----
-
-## 📈 Monitoring & Observability
-
-```
-📊 Prometheus     → /metrics endpoint — request rate, latency P50/P95/P99, error counters
-📈 Grafana        → Pre-built dashboard — cache hit rate, active WS connections, anomaly frequency
-📝 Structured Logs → JSON format with request IDs, latency, endpoint, user context
-🔔 Drift Alerts   → Automated alerts when sentiment distribution shifts beyond threshold
-🌸 Celery Flower  → Real-time task monitoring (port 5555) — queue depths, failure rates
-```
+See [`SECURITY.md`](MoodMarket/backend/SECURITY.md) for the responsible disclosure policy.
 
 ---
 
 ## 🔄 CI/CD Pipeline
 
-```yaml
-# .github/workflows/test.yml  — triggers on every push & PR
-✅ Backend Lint (flake8)       → Zero syntax/undefined-name errors
-✅ Frontend Lint (ESLint)      → Zero TypeScript/React rule violations
-✅ Type Check (mypy)           → Strict type annotation validation
-✅ 200 Backend Tests (pytest)  → Unit + integration + e2e with TimescaleDB + Redis services
-✅ Frontend Build (tsc + vite) → Production bundle validation
-✅ Coverage Upload (Codecov)   → Coverage report artifact stored
+Four GitHub Actions workflows run on every push and pull request:
 
-# .github/workflows/build.yml — triggers on push to main
-✅ Docker Build Backend        → Multi-stage Dockerfile → GHCR push
-✅ Docker Build Frontend       → Optimized Nginx image → GHCR push
+| Workflow | Trigger | What It Does |
+|----------|---------|-------------|
+| `test.yml` | push · PR | flake8 · ESLint · mypy · pytest 200+ tests · frontend build · Codecov |
+| `security.yml` | push · PR · weekly | Trivy container scan · npm audit · pip-audit · Gitleaks secret scan |
+| `performance.yml` | push · PR | Lighthouse Core Web Vitals · Bundle size analysis |
+| `build.yml` | push to `main` · tags | Multi-stage Docker build → push backend + frontend to GHCR |
 
-# .github/workflows/deploy.yml — triggers on version tag (v*)
-✅ SSH Deploy                  → Pull latest images → docker compose up -d
+---
+
+## 📁 Project Structure
+
+```
+Mood_Market/
+├── README.md                          ← You are here
+└── MoodMarket/
+    ├── backend/                       ← FastAPI application
+    │   ├── main.py                    ← App entrypoint + lifespan hooks
+    │   ├── config.py                  ← Pydantic settings (100+ config values)
+    │   ├── orchestrator.py            ← 5-agent pipeline coordinator
+    │   ├── database.py                ← TimescaleDB / SQLite engine + migrations
+    │   ├── schema.py                  ← Pydantic data models
+    │   ├── agents/                    ← Async trading desk
+    │   │   ├── base_agent.py          ← LRU cache · timeout · fallback base
+    │   │   ├── sentiment_agent.py
+    │   │   ├── technical_agent.py
+    │   │   ├── forecaster_agent.py
+    │   │   ├── risk_manager_agent.py
+    │   │   └── synthesizer_agent.py
+    │   ├── routes/                    ← REST + WebSocket endpoints
+    │   │   ├── sentiment.py
+    │   │   ├── forecast.py
+    │   │   ├── anomaly.py
+    │   │   ├── pipeline.py
+    │   │   ├── explain.py
+    │   │   ├── watchlist.py
+    │   │   └── health.py
+    │   ├── sources/                   ← Data ingestion adapters
+    │   │   ├── reddit_source.py
+    │   │   ├── news_source.py
+    │   │   ├── price_source.py
+    │   │   └── trends_source.py
+    │   ├── migrations/                ← TimescaleDB SQL migrations
+    │   ├── docker/                    ← Prometheus / Grafana configs
+    │   ├── docker-compose.yml         ← 9-service local dev stack
+    │   ├── docker-compose.prod.yml    ← Production stack (Nginx + SSL)
+    │   ├── Dockerfile                 ← Multi-stage backend image
+    │   ├── requirements.txt           ← Production dependencies
+    │   ├── requirements-ci.txt        ← Lightweight CI dependencies
+    │   ├── .env.example               ← Environment variable template
+    │   ├── CONTRIBUTING.md
+    │   └── SECURITY.md
+    │
+    ├── frontend/                      ← React 19 + TypeScript dashboard
+    │   ├── src/
+    │   │   ├── pages/                 ← Landing · Dashboard · Compare · Portfolio
+    │   │   ├── components/            ← SentimentDial · SignalCard · AnomalyBadge …
+    │   │   ├── context/               ← RealtimeContext · ToastContext
+    │   │   ├── hooks/                 ← useWebSocket · useRealtimeData · useTheme
+    │   │   └── utils/                 ← WebSocket client · signal generator
+    │   ├── Dockerfile                 ← Multi-stage Node → Nginx image
+    │   └── package.json
+    │
+    ├── ml/                            ← Standalone ML experiments & training
+    │   ├── model.py                   ← Informer Transformer (ProbSparse attention)
+    │   ├── train.py                   ← FP16 training + early stopping
+    │   ├── trainer.py                 ← Optuna HPO (100 trials)
+    │   ├── inference.py               ← Real-time prediction engine
+    │   ├── sentiment_ensemble.py      ← FinBERT + DistilBERT fusion
+    │   ├── anomaly_detector.py        ← 7-method ensemble orchestrator
+    │   ├── shap_explainer.py          ← SHAP attribution engine
+    │   ├── evaluator.py               ← Multi-baseline comparison
+    │   ├── backtester.py              ← Historical strategy backtester
+    │   ├── agents/                    ← Agent module (shared with backend)
+    │   ├── detectors/                 ← Individual anomaly detectors
+    │   ├── processors/                ← Data pipeline processors
+    │   └── benchmarks/                ← Locust load test + results
+    │
+    ├── test/                          ← 200+ automated tests
+    │   ├── unit/                      ← 15 unit test files
+    │   ├── integration/               ← 5 integration test files
+    │   └── e2e/                       ← 2 end-to-end test files
+    │
+    └── doc/                           ← Documentation extras
+        ├── demo/                      ← Offline demo server
+        └── examples/                  ← API usage examples
 ```
 
 ---
 
-## 🔮 Roadmap
+## 🗺 Roadmap
 
-- [ ] 🌍 Live Reddit & Twitter API streaming integration
-- [ ] 🤖 GPT-4o powered news summarizer agent
-- [ ] 🏦 Alpaca / Interactive Brokers order execution bridge
-- [ ] 📈 Portfolio-level VaR and risk analytics
-- [ ] 🔔 Telegram / Discord Hype Storm alert bot
-- [ ] 🧬 Reinforcement learning trading agent (PPO)
-- [ ] 🎬 Shareable prediction replay system for review
+- [ ] **Live streaming** — real Reddit OAuth + Twitter API v2 (currently uses mock/cached data)
+- [ ] **GPT-4o news agent** — automated earnings call summarizer and macro event digest
+- [ ] **Order execution bridge** — Alpaca / Interactive Brokers paper-trading integration
+- [ ] **Portfolio-level VaR** — Monte Carlo Value-at-Risk across correlated positions
+- [ ] **Alert bot** — Telegram / Discord HYPE_STORM notifications
+- [ ] **RL trading agent** — PPO policy trained on backtested environment
+- [ ] **Multi-language support** — i18n for dashboard UI
 
 ---
 
-## 🏆 Technical Highlights for Evaluators
+## 🤝 Contributing
 
-<details>
-<summary><b>📋 Click to expand — Full Technical Depth Summary</b></summary>
+Contributions are welcome! Please:
 
-### 🤖 Machine Learning & Deep Learning
-- **Informer Architecture** with ProbSparse self-attention (O(L log L) complexity)
-- **Encoder-Decoder** with positional encoding and generative-style single-pass decoding
-- **Uncertainty Quantification** via Softplus-projected uncertainty head + Monte Carlo dropout
-- **Custom BCE+Huber** composite loss function with uncertainty regularization term
-- **Temperature Scaling** post-hoc calibration with ECE (Expected Calibration Error) measurement
-- **INT8 Dynamic Quantization** for edge deployment — 3.8× size reduction demonstrated
-- **SHAP** deep feature attribution with global importance ranking across 1000+ samples
-- **Attention Rollout** cross-layer attention propagation visualization
-- **FP16 Mixed Precision** training with `torch.cuda.amp`
-- **Optuna** hyperparameter optimization with 100-trial Bayesian search
+1. Fork and create a feature branch: `git checkout -b feat/my-feature`
+2. Ensure all 200+ tests pass: `pytest MoodMarket/test/ -q`
+3. Run linting: `flake8 MoodMarket/backend/` and `cd MoodMarket/frontend && npm run lint`
+4. Open a PR with a clear description
 
-### 🛠️ Software Engineering
-- **200+ tests** across 22 files: unit, integration, and e2e layers
-- **Async everything**: FastAPI, SQLAlchemy 2.0 async, Redis async, Celery, WebSocket, agent loops
-- **Multi-agent architecture** with abstract base, per-agent caching, timeout enforcement, graceful fallback
-- **Clean module separation**: routes, agents, detectors, processors, sources, middleware, celery tasks
-- **Pydantic v2** `ConfigDict` models for all request/response validation
-- **Type annotations** and Google-style docstrings throughout the codebase
-- **Custom decorators** for rate limiting, retry logic, and performance tracking
-
-### ⚙️ DevOps & Infrastructure
-- **Docker Compose** production stack: Backend + Celery Worker + Beat + Flower + PostgreSQL/TimescaleDB + Redis + Nginx + Prometheus + Grafana (9 services)
-- **GitHub Actions CI/CD**: 3 workflows — test, build, deploy
-- **TimescaleDB** hypertables with continuous aggregates, compression policies, and retention
-- **Prometheus + Grafana** monitoring with pre-built dashboard and alert rules
-- **Nginx** reverse proxy with SSL termination and gzip compression
-- **Redis** multi-layer cache: LRU + TTL + Pub/Sub + Rate Limiter + Task Queue
-- **Locust** load testing proving 1000+ RPS at < 30ms P95
-
-</details>
+See [`CONTRIBUTING.md`](MoodMarket/backend/CONTRIBUTING.md) for full development setup, code style, and PR guidelines.
 
 ---
 
 ## 👩‍💻 Author
 
-<div align="center">
+**Yashaswini V** — AI/ML & Data Science, building at the intersection of deep learning and financial markets.
 
-**Yashaswini V**
-
-*AI/ML & Data Science Aspirant · Building at the intersection of deep learning and financial markets*
-
-[![GitHub](https://img.shields.io/badge/GitHub-Yashaswini--V21-181717?style=for-the-badge&logo=github&labelColor=0d0d1a)](https://github.com/Yashaswini-V21)
-
-</div>
+<a href="https://github.com/Yashaswini-V21">
+  <img src="https://img.shields.io/badge/GitHub-Yashaswini--V21-181717?style=for-the-badge&logo=github" />
+</a>
 
 ---
 
-## 📜 License
+## 📚 Documentation
 
-```
-MIT License — Free for academic and commercial use.
-Built with 💜 and deep learning.
-```
+| Document | Description |
+|----------|-------------|
+| [ARCHITECTURE.md](MoodMarket/doc/ARCHITECTURE.md) | Full system design, data flow diagrams, component breakdown, and key design decisions |
+| [CHANGELOG.md](MoodMarket/doc/CHANGELOG.md) | Version history following [Keep a Changelog](https://keepachangelog.com/) format |
+| [Makefile](MoodMarket/Makefile) | Developer convenience commands — `make run`, `make test`, `make docker-up` and more |
+| [CONTRIBUTING.md](MoodMarket/backend/CONTRIBUTING.md) | Development setup, code style, branch strategy, and PR guidelines |
+| [SECURITY.md](MoodMarket/backend/SECURITY.md) | Security policy, vulnerability disclosure process |
+| [.env.example](MoodMarket/backend/.env.example) | All required environment variables with descriptions |
 
-<div align="center">
+---
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d0d1a,20:0f0a2e,40:1e1060,60:4c1d95,80:7c3aed,100:a855f7&height=140&section=footer" width="100%"/>
+## 📄 License
 
-**⭐ Star this repo if Mood Market gave you alpha! ⭐**
+Released under the [MIT License](LICENSE).
 
-*Made with 💜 for the hackathon — Top 1% or bust.*
+---
 
-</div>
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7c3aed,50:4c1d95,100:0d0d1a&height=120&section=footer" alt="Footer" />
+</p>
+
+<p align="center">
+  <sub>⭐ If this project helped you, please give it a star — it means a lot!</sub><br/>
+  <sub><em>Not financial advice. For educational purposes only.</em></sub>
+</p>

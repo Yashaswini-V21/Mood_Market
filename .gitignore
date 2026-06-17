@@ -79,3 +79,17 @@ notebooks/.ipynb_checkpoints/
 
 # ─── Empty directories ───────────────────────────────────────────────────────
 notebooks/
+
+# ─── CI/CD Temp Artifacts ────────────────────────────────────────────────────
+build_push_logs*.txt
+*.sarif
+
+# ─── Scratch / test files (never commit these) ───────────────────────────────
+banner_test*.svg
+banner_test*.html
+test_banners.html
+/scratch/
+
+# ─── MoodMarket Frontend build in monorepo ───────────────────────────────────
+MoodMarket/frontend/dist/
+MoodMarket/frontend/node_modules/
