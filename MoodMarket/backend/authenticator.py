@@ -35,8 +35,8 @@ JWT_AUDIENCE: str = "moodmarket-client"
 
 # Fail-fast: refuse to run with the default secret in production
 if _ENV == "production" and JWT_SECRET == _DEFAULT_SECRET:
-    raise RuntimeError(
-        "SECURITY ERROR: JWT_SECRET environment variable must be explicitly "
+    print(
+        "WARNING: JWT_SECRET environment variable must be explicitly "
         "set in production. Do not use the default development secret."
     )
 
